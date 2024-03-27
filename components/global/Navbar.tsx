@@ -6,7 +6,7 @@ type Props = {};
 const Navbar = async (props: Props) => {
   return (
     <header
-      className="fixed top-1 left-0 right-0 p-4
+      className="fixed top-0 left-0 right-0 p-4
      bg-black/40 backdrop-blur-lg z-[100] 
      flex items-center border-b-[1px] border-neutral-900 justify-between"
     >
