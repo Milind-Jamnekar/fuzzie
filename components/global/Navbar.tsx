@@ -10,7 +10,7 @@ const Navbar = async (props: Props) => {
      bg-black/40 backdrop-blur-lg z-[100] 
      flex items-center border-b-[1px] border-neutral-900 justify-between"
     >
-      <aside className="flex items-center gap-[2px]">
+      <aside className="flex items-center gap-[2px] text-white dark:text-white">
         <p className="font-bold text-3xl">Fu</p>
         <Image
           src="/fuzzieLogo.png"
