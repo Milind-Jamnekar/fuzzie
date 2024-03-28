@@ -4,10 +4,12 @@ import { ContainerScroll } from "@/components/global/container-scroll-animation"
 import { InfiniteMovingCards } from "@/components/global/infinite-moving-cards";
 import { LampComponent } from "@/components/global/lamp";
 import Navbar from "@/components/global/navbar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { clients, products } from "@/lib/constant";
+import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   //WIP: remove fault IMAge for home page
@@ -43,7 +45,7 @@ export default function Home() {
         speed="slow"
       />
       <HeroParallax products={products}></HeroParallax>
-      <section className="mt-[100px]">
+      <section className="my-[100px]">
         <LampComponent />
         <div className="flex flex-wrap items-center justify-center flex-col md:flex-row gap-8 -mt-72">
           <CardContainer className="inter-var ">
@@ -193,6 +195,50 @@ export default function Home() {
           </CardContainer>
         </div>
       </section>
+
+      <footer className="mt-32 mb-9 items-start w-full px-16 flex justify-between">
+        <aside className="flex flex-col gap-2">
+          <div className="flex items-center gap-[2px]">
+            <p className="font-bold text-3xl">Fu</p>
+            <Image
+              src="/fuzzieLogo.png"
+              width={15}
+              height={15}
+              alt="Fuzzie logo"
+              className="shodow-sm"
+            />
+            <p className="font-bold text-3xl">zie</p>
+          </div>
+          <p>
+            Building in public by
+            <Link
+              className={buttonVariants({ variant: "link", className: "pl-2" })}
+              href="https://twitter.com/jamnekarmilind"
+              target="_blank"
+            >
+              @jamnekarmilind
+            </Link>
+          </p>
+        </aside>
+
+        <ul className="flex items-start flex-col gap-4 list-none text-foreground/40">
+          <li>
+            <Link href="#">Product</Link>
+          </li>
+          <li>
+            <Link href="#">Pricing</Link>
+          </li>
+          <li>
+            <Link href="#">Clients</Link>
+          </li>
+          <li>
+            <Link href="#">Resources</Link>
+          </li>
+          <li>
+            <Link href="#">Documentation</Link>
+          </li>
+        </ul>
+      </footer>
     </main>
   );
 }
