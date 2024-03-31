@@ -1,20 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import {
-  PanelLeft,
-  Package2,
-  Home,
-  ShoppingCart,
-  Package,
-  Users2,
-  LineChart,
-} from "lucide-react";
-import { Button } from "../ui/button";
 
-type Props = {};
-
-const Navbar = async (props: Props) => {
+export async function Navbar() {
   return (
     <header
       className="fixed top-0 left-0 right-0 p-4
@@ -68,6 +55,4 @@ const Navbar = async (props: Props) => {
       </aside>
     </header>
   );
-};
-
-export default Navbar;
+}
