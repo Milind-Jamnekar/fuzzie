@@ -1,7 +1,14 @@
+import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
 import Link from "next/link";
 
 export async function Navbar() {
+  const db = createClient();
+  const {
+    data: { user },
+  } = await db.auth.getUser();
+  console.log(user);
+
   return (
     <header
       className="fixed top-0 left-0 right-0 p-4
@@ -50,7 +57,7 @@ export async function Navbar() {
             {true ? "Dashboard" : "Get Started"}
           </span>
         </Link>
-        {/* {user ? <UserButton afterSignOutUrl="/" /> : null} */}
+        {user ? <div>Logout</div> : <Link href="/login">Login</Link>}
         {/* <MenuIcon className="md:hidden" /> */}
       </aside>
     </header>
