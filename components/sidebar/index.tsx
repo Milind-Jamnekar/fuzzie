@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "../ui/sheet";
+import { UserButton } from "@clerk/nextjs";
 
 const MenuOptions = () => {
   const pathName = usePathname();
