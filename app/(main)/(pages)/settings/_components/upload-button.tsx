@@ -28,7 +28,7 @@ const UploadCareButton = ({ onUpload }: Props) => {
       "file-upload-success",
       handleUpload
     );
-  }, []);
+  }, [onUpload, router]);
 
   return (
     <div>
