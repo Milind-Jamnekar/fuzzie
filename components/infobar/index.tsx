@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { Book, Headphones, Search } from "lucide-react";
-import Templates from "../icons/cloud_download";
 import { Input } from "@/components/ui/input";
 
 import {
