@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -16,31 +16,37 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { EditUserProfileSchema } from "@/lib/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { User } from "@prisma/client";
 
-function ProfileForm() {
+function ProfileForm({
+  user,
+  onUpload,
+}: {
+  user: User;
+  onUpload: (values: { name: string; email: string }) => Promise<void>;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof EditUserProfileSchema>>({
     resolver: zodResolver(EditUserProfileSchema),
     defaultValues: {
-      name: "sjdfklsjfklslk",
-      email: "jkalf@gamil.com",
+      //@ts-ignore
+      name: user.name,
+      email: user.email,
     },
   });
 
   async function onSubmit(values: z.infer<typeof EditUserProfileSchema>) {
-    form.reset();
+    setIsLoading(true);
+    await onUpload(values);
+    setIsLoading(false);
   }
-
-  useEffect(() => {
-    if (form.formState.isSubmitSuccessful) {
-      alert("form submitted successfull");
-    }
-  }, [form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
+          disabled={isLoading}
           control={form.control}
           name="name"
           render={({ field }) => (
@@ -54,6 +60,7 @@ function ProfileForm() {
           )}
         />
         <FormField
+          disabled={isLoading}
           control={form.control}
           name="email"
           render={({ field }) => (
@@ -66,11 +73,8 @@ function ProfileForm() {
             </FormItem>
           )}
         />
-
-        <Button disabled={form.formState.isSubmitting} type="submit">
-          {form.formState.isSubmitting
-            ? "Saving user settings"
-            : "Save user settings"}
+        <Button disabled={isLoading} type="submit">
+          {isLoading ? "Saving user settings" : "Save user settings"}
         </Button>
       </form>
     </Form>
