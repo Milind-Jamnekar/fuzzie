@@ -32,14 +32,15 @@ const ProfilePicture = ({ userImage, onDelete, onUpload }: Props) => {
               src={userImage}
               alt="User_Image"
               height={400}
-              width={600}
+              width={700}
               className="rounded-2xl"
             />
             <Button
+              variant="ghost"
               onClick={onRemoveProfileImage}
-              className="bg-transparent text-white/70 hover:bg-transparent hover:text-white"
+              className="mt-4"
             >
-              <X /> Remove profile
+              <X className="mr-2 w-4 h-4" /> Remove profile
             </Button>
           </>
         ) : (
