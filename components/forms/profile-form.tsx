@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { EditUserProfileSchema } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { User } from "@prisma/client";
+import { LoaderIcon } from "lucide-react";
 
 function ProfileForm({
   user,
@@ -74,7 +75,14 @@ function ProfileForm({
           )}
         />
         <Button disabled={isLoading} type="submit">
-          {isLoading ? "Saving user settings" : "Save user settings"}
+          {isLoading ? (
+            <div className="flex gap-3">
+              <LoaderIcon className="h-4 w-4 animate-spin" />
+              <p>Saving User Settings...</p>
+            </div>
+          ) : (
+            "Save User Settings"
+          )}
         </Button>
       </form>
     </Form>
