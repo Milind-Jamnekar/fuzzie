@@ -1,8 +1,18 @@
-function MainPageTitle({ title }: { title: string }) {
+import { ReactNode } from "react";
+import { Button } from "../ui/button";
+
+function MainPageTitle({
+  title,
+  children,
+}: {
+  title: string;
+  children?: ReactNode;
+}) {
   return (
-    <h1 className="text-4xl sticky top-0 p-6 bg-background/50 backdrop-blur-lg flex items-center border-b">
-      {title}
-    </h1>
+    <div className="sticky top-0 p-6 bg-background/50 backdrop-blur-lg flex items-center border-b">
+      <h1 className="text-4xl ">{title}</h1>
+      {children}
+    </div>
   );
 }
 
