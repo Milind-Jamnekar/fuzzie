@@ -46,12 +46,14 @@ async function SettingsPage() {
           <h2 className="font-bold text-2xl">User profile</h2>
           <p className="text-white/50">add or update your information</p>
         </div>
-        <ProfileImage
-          onDelete={removeProfileImage}
-          userImage={user.profileImage || ""}
-          onUpload={uploadProfileImage}
-        />
-        <ProfileForm onUpload={onUserFormUpload} user={user} />
+        <div className="grid gap-0 grid-cols-1 md:grid-cols-2 md:gap-1">
+          <ProfileImage
+            onDelete={removeProfileImage}
+            userImage={user.profileImage || ""}
+            onUpload={uploadProfileImage}
+          />
+          <ProfileForm onUpload={onUserFormUpload} user={user} />
+        </div>
       </div>
     </div>
   );
