@@ -7,8 +7,8 @@ export const EditUserProfileSchema = z.object({
 });
 
 export const WorkflowFormSchema = z.object({
-  name: z.string().min(1, "Required"),
-  description: z.string().min(1, "Required"),
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
 });
 
 export type ConnectionTypes = "Google Drive" | "Notion" | "Slack" | "Discord";

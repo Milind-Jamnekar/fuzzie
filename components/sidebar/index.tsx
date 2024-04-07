@@ -1,4 +1,6 @@
 "use client";
+import { ModeToggle } from "@/components/global/toggle-mode";
+import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -6,28 +8,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { menuOptions } from "@/lib/constant";
-import { Separator } from "@/components/ui/separator";
-import { ModeToggle } from "@/components/global/toggle-mode";
 
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import {
-  Database,
-  GitBranch,
-  Home,
-  LineChart,
-  LucideMousePointerClick,
-  Package,
-  Package2,
-  PanelLeft,
-  Settings,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
-import { Button } from "../ui/button";
-import { SheetTrigger, SheetContent, Sheet } from "../ui/sheet";
-import { UserButton } from "@clerk/nextjs";
 
 const MenuOptions = () => {
   const pathName = usePathname();

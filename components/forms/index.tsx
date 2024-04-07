@@ -1,3 +1,3 @@
 import ProfileForm from "./profile-form";
-
-export { ProfileForm };
+import WorkflowForm from "./workflow-form";
+export { ProfileForm, WorkflowForm };

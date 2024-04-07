@@ -5,13 +5,13 @@ import InfoBar from "@/components/infobar";
 import Sidebar from "@/components/sidebar";
 import { ReactNode } from "react";
 
-const Layout = (props: { children: ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex overflow-hidden h-screen">
       <Sidebar />
       <div className="w-full">
         <InfoBar />
-        {props.children}
+        {children}
       </div>
     </div>
   );

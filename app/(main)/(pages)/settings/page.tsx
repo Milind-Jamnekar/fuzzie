@@ -41,12 +41,12 @@ async function SettingsPage() {
   return (
     <div className="flex flex-col gap-4">
       <MainPageTitle title="Settings" />
-      <div className="flex flex-col gap-10 p-6">
+      <div className="flex flex-col gap-4 p-6">
         <div>
           <h2 className="font-bold text-2xl">User profile</h2>
-          <p className="text-white/50">add or update your information</p>
+          <p className="text-white/50">Add or update your information</p>
         </div>
-        <div className="grid gap-0 grid-cols-1 md:grid-cols-2 md:gap-1">
+        <div className="grid gap-0 grid-cols-1 md:grid-cols-2 md:gap-6">
           <ProfileImage
             onDelete={removeProfileImage}
             userImage={user.profileImage || ""}
