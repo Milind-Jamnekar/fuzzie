@@ -16,7 +16,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 
-function WorkflowForm({ className }: React.ComponentProps<"form">) {
+function WorkflowForm() {
   const form = useForm<z.infer<typeof WorkflowFormSchema>>({
     mode: "onChange",
     resolver: zodResolver(WorkflowFormSchema),
@@ -33,7 +33,7 @@ function WorkflowForm({ className }: React.ComponentProps<"form">) {
   return (
     <Form {...form}>
       <form
-        className={cn("grid items-start gap-4", className)}
+        className={cn("grid items-start gap-4")}
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <FormField
