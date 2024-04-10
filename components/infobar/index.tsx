@@ -8,24 +8,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import { Button, buttonVariants } from "../ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import MenuOptions from "../sidebar";
 import { menuOptions } from "@/lib/constant";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import { Button, buttonVariants } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 // import { UserButton } from "@clerk/nextjs";
 // import { useBilling } from "@/providers/billing-provider";
 // import { onPaymentDetails } from "@/app/(main)/(pages)/billing/_actions/payment-connecetions";
