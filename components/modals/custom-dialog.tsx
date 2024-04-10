@@ -37,14 +37,16 @@ import {
   FormMessage,
 } from "../ui/form";
 
-export function WorkflowDialog({
+export function CustomDialog({
   children,
   title,
   description,
+  form,
 }: {
   children: React.ReactNode;
   title: string;
   description: string;
+  form?: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -59,6 +61,7 @@ export function WorkflowDialog({
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           <ProfileForm />
+          <form />
         </DialogContent>
       </Dialog>
     );

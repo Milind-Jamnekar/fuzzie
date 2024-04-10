@@ -11,7 +11,7 @@ function ConnectionsPage() {
           Connect all your apps directly from here. You may need to connect
           these apps regularly to refresh verification
         </p>
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {CONNECTIONS.map((connection) => (
             <ConnectionCard
               key={connection.title}
