@@ -16,13 +16,7 @@ import Link from "next/link";
 export function Workflows() {
   return (
     <div className="relative flex flex-col gap-4">
-      <section className="flex flex-col gap-4">
-        {/* <MoreCredits /> */}
-        {/* {workflows?.length ? (
-          workflows.map((flow) => <Workflow key={flow.id} {...flow} />)
-        ) : (
-          <EmptyWorkflowComp>
-        )} */}
+      <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <Workflow
           name="Test workflow "
           description="Test workflow component name"
