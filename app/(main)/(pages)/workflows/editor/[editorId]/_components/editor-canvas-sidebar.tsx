@@ -1,18 +1,16 @@
 "use client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EditorCanvasTypes, EditorNodeType } from "@/lib/types";
 import { useNodeConnections } from "@/providers/connections-provider";
 import { useEditor } from "@/providers/editor-provider";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import React, { useEffect } from "react";
-import { Separator } from "@/components/ui/separator";
-import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constant";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constant";
 // import {
 //   fetchBotSlackChannels,
 //   onConnections,
@@ -25,12 +23,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
-import { onDragStart } from "@/lib/editor-utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import RenderConnectionAccordion from "./render-connection-accordion";
-// import RenderOutputAccordion from "./render-output-accordian";
-// import { useFuzzieStore } from "@/store";
+import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
+import RenderConnectionAccordion from "./render-connection-accordion";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -39,6 +34,10 @@ type Props = {
 const EditorCanvasSidebar = ({ nodes }: Props) => {
   const { state } = useEditor();
   const { nodeConnection } = useNodeConnections();
+  const selectedNode = CONNECTIONS.filter(
+    (connection) => connection.title === state.editor.selectedNode.data.title
+  );
+
   //   const { googleFile, setSlackChannels } = useFuzzieStore();
   //   useEffect(() => {
   //     if (state) {
@@ -46,14 +45,14 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   //     }
   //   }, [state]);
 
-  //   useEffect(() => {
-  //     if (nodeConnection.slackNode.slackAccessToken) {
-  //       fetchBotSlackChannels(
-  //         nodeConnection.slackNode.slackAccessToken,
-  //         setSlackChannels
-  //       );
-  //     }
-  //   }, [nodeConnection]);
+  // useEffect(() => {
+  //   if (nodeConnection.slackNode.slackAccessToken) {
+  //     fetchBotSlackChannels(
+  //       nodeConnection.slackNode.slackAccessToken,
+  //       setSlackChannels
+  //     );
+  //   }
+  // }, [nodeConnection]);
 
   return (
     <aside className="@container">
@@ -65,7 +64,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
           </TabsList>
           <TabsContent
             value="actions"
-            className="grid grid-cols-1 @xl:grid-cols-2 @3xl:grid-cols-3 gap-4 pb-44"
+            className="grid grid-cols-1 @xl:grid-cols-2 @3xl:grid-cols-3 gap-4 "
           >
             {Object.entries(EditorCanvasDefaultCardTypes)
               .filter(
@@ -77,7 +76,6 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                 <Card
                   key={cardKey}
                   draggable
-                  // className="w-full cursor-grab border-black bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900"
                   onDragStart={(event) => {
                     //   onDragStart(event, cardKey as EditorCanvasTypes)
                     event.dataTransfer.setData(
@@ -99,60 +97,31 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                 </Card>
               ))}
           </TabsContent>
-          <TabsContent value="settings" className="-mt-6">
-            <div className="px-2 py-4 text-center text-xl font-bold">
+          <TabsContent value="settings" className="">
+            <div className="px-2 py-4 text-center text-xl font-bold ">
               {state.editor.selectedNode.data.title}
             </div>
 
-            {/* <Accordion type="multiple">
-              <AccordionItem value="Options" className="border-y-[1px] px-2">
-                <AccordionTrigger className="!no-underline">
-                  Account
-                </AccordionTrigger>
-                <AccordionContent>
-                  {CONNECTIONS.map((connection) => (
+            {selectedNode[0] && (
+              <Accordion type="multiple">
+                <AccordionItem value="Options" className="border-y-[1px] px-2">
+                  <AccordionTrigger className="!no-underline">
+                    Account
+                  </AccordionTrigger>
+                  <AccordionContent>
                     <RenderConnectionAccordion
-                      key={connection.title}
                       state={state}
-                      connection={connection}
+                      connection={selectedNode[0]}
                     />
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="Expected Output" className="px-2">
-                <AccordionTrigger className="!no-underline">
-                  Action
-                </AccordionTrigger>
-                <RenderOutputAccordion
-                  state={state}
-                  nodeConnection={nodeConnection}
-                />
-              </AccordionItem>
-            </Accordion> */}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            )}
           </TabsContent>
         </Tabs>
       </ScrollArea>
     </aside>
   );
-
-  //   const tags = Array.from({ length: 50 }).map(
-  //     (_, i, a) => `v1.2.0-beta.${a.length - i}`
-  //   );
-  //   return (
-  //     <ScrollArea className="w-full h-screen rounded-md border">
-  //       <div className="p-4">
-  //         <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
-  //         {tags.map((tag) => (
-  //           <>
-  //             <div key={tag} className="text-sm">
-  //               {tag}
-  //             </div>
-  //             <Separator className="my-2" />
-  //           </>
-  //         ))}
-  //       </div>
-  //     </ScrollArea>
-  //   );
 };
 
 export default EditorCanvasSidebar;
