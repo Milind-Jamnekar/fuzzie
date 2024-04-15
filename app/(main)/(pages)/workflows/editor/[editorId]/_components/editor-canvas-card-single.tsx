@@ -59,7 +59,7 @@ const EditorCanvasCardSingle = ({ data }: { data: EditorCanvasCardType }) => {
             </CardDescription>
           </div>
         </CardHeader>
-        <Badge variant="secondary" className="absolute right-2 top-2">
+        <Badge variant="default" className="absolute right-2 top-2">
           {data.type}
         </Badge>
         <div

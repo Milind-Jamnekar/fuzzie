@@ -43,7 +43,9 @@ function ConnectionCard({
             <CardTitle className="xl:mb-3">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
-          <Link
+
+          {JSON.stringify(process.env.SLACK_REDIRECT_URI)}
+          {/* <Link
             href={
               title === "Discord"
                 ? process.env.NEXT_PUBLIC_DISCORD_REDIRECT!
@@ -56,7 +58,7 @@ function ConnectionCard({
             className={buttonVariants({ variant: "secondary" })}
           >
             Connect
-          </Link>
+          </Link> */}
         </div>
       </CardHeader>
     </Card>
