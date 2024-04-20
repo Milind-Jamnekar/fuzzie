@@ -1,17 +1,17 @@
 "use client";
 import { WorkflowFormSchema } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useForm, Form } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
@@ -26,14 +26,15 @@ function WorkflowForm() {
   const isLoading = form.formState.isLoading;
   const router = useRouter();
 
-  const handleSubmit = (values: z.infer<typeof WorkflowFormSchema>) => {
-    console.log(handleSubmit);
+  const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
+    await new Promise((res, rej) => setTimeout(() => res("done"), 5000));
+    console.log(values);
   };
 
   return (
     <Form {...form}>
       <form
-        className={cn("grid items-start gap-4")}
+        className="grid items-start gap-4"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <FormField
