@@ -20,33 +20,28 @@ import {
 } from "@/components/ui/drawer";
 import { ReactNode, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
-import { WorkflowForm } from "../forms";
 
-export function CustomDialog({
-  children,
-  title,
-  description,
-  form,
-}: {
-  children: React.ReactNode;
+type Prop = {
+  children: ReactNode;
   title: string;
   description: string;
-  form?: ReactNode;
-}) {
+  formElement: ReactNode | undefined;
+};
+
+export function CustomDialog(prop: Prop) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogTrigger asChild>{prop.children}</DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            <DialogTitle>{prop.title}</DialogTitle>
+            <DialogDescription>{prop.description}</DialogDescription>
           </DialogHeader>
-          <WorkflowForm />
-          <form />
+          {prop.formElement}
         </DialogContent>
       </Dialog>
     );
@@ -54,15 +49,13 @@ export function CustomDialog({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      <DrawerTrigger asChild>{prop.children}</DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
+          <DrawerTitle>{prop.title}</DrawerTitle>
+          <DrawerDescription>{prop.description}</DrawerDescription>
         </DrawerHeader>
-        <div className="px-4">
-          <WorkflowForm />
-        </div>
+        <div className="px-4">{prop.formElement}</div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
