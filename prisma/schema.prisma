@@ -117,7 +117,7 @@ model Workflows {
   notionDbId        String?
   flowPath          String?
   cronPath          String?
-  publish           Boolean? @default(false)
+  publish           Boolean  @default(false)
   description       String
   User              User     @relation(fields: [userId], references: [clerkId])
   userId            String
