@@ -2,7 +2,7 @@
 import { WorkflowFormSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import { onCreateWorkflow } from "@/app/(main)/(pages)/workflows/_actions/workflow-connections";
+import { toast } from "sonner";
 
 function WorkflowForm() {
   const form = useForm<z.infer<typeof WorkflowFormSchema>>({
@@ -27,8 +29,14 @@ function WorkflowForm() {
   const router = useRouter();
 
   const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
-    await new Promise((res, rej) => setTimeout(() => res("done"), 5000));
-    console.log(values);
+    const workflowPromise = onCreateWorkflow(values.name, values.description);
+    toast.promise(workflowPromise, {
+      loading: "Creating flow...",
+      success: (data) => `${data.message}`,
+      error: "Error",
+    });
+
+    router.refresh();
   };
 
   return (

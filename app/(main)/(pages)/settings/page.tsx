@@ -4,6 +4,8 @@ import ProfileImage from "./_components/profile-image";
 import { db } from "@/lib/db";
 import { currentUser, useAuth } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
+import { Loader } from "lucide-react";
 
 async function SettingsPage() {
   const authuser = await currentUser();
@@ -49,11 +51,13 @@ async function SettingsPage() {
         </div>
         <Separator />
         <div className="grid gap-0 grid-cols-1 md:grid-cols-2 md:gap-6">
-          <ProfileImage
-            onDelete={removeProfileImage}
-            userImage={user.profileImage || ""}
-            onUpload={uploadProfileImage}
-          />
+          <Suspense fallback={<Loader className="animate-spin" />}>
+            <ProfileImage
+              onDelete={removeProfileImage}
+              userImage={user.profileImage || ""}
+              onUpload={uploadProfileImage}
+            />
+          </Suspense>
           <ProfileForm onUpload={onUserFormUpload} user={user} />
         </div>
       </div>

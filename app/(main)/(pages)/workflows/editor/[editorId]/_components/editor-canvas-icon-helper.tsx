@@ -1,5 +1,4 @@
-"use client";
-import React from "react";
+import { EditorCanvasTypes } from "@/lib/types";
 import {
   Calendar,
   CircuitBoard,
@@ -8,13 +7,11 @@ import {
   HardDrive,
   Mail,
   MousePointerClickIcon,
-  Plus,
   Slack,
   Timer,
   Webhook,
   Zap,
 } from "lucide-react";
-import { EditorCanvasTypes } from "@/lib/types";
 
 type Props = { type: EditorCanvasTypes };
 

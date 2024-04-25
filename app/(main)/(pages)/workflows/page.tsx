@@ -14,7 +14,7 @@ function WorkflowsPage() {
           <CustomDialog
             title="Create a Workflow Automation"
             description="Workflows are powerfull that helps you to automate tasks"
-            form={<WorkflowForm />}
+            formElement={<WorkflowForm />}
           >
             <Button size="icon">
               <Plus className="h-5 w-5" />

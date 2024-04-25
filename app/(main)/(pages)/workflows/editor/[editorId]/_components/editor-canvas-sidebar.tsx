@@ -26,6 +26,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
 import RenderConnectionAccordion from "./render-connection-accordion";
+import RenderOutputAccordion from "./render-output-accordion";
+import { useFuzzieStore } from "@/lib/store";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -38,7 +40,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
     (connection) => connection.title === state.editor.selectedNode.data.title
   );
 
-  //   const { googleFile, setSlackChannels } = useFuzzieStore();
+  const { googleFile, setSlackChannels } = useFuzzieStore();
   //   useEffect(() => {
   //     if (state) {
   //       onConnections(nodeConnection, state, googleFile);
@@ -104,7 +106,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
 
             {selectedNode[0] && (
               <Accordion type="multiple">
-                <AccordionItem value="Options" className="border-y-[1px] px-2">
+                <AccordionItem value="account" className="border-y-[1px]">
                   <AccordionTrigger className="!no-underline">
                     Account
                   </AccordionTrigger>
@@ -112,6 +114,17 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                     <RenderConnectionAccordion
                       state={state}
                       connection={selectedNode[0]}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="options" className="border-y-[1px]">
+                  <AccordionTrigger className="!no-underline">
+                    Options
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <RenderOutputAccordion
+                      state={state}
+                      connection={nodeConnection}
                     />
                   </AccordionContent>
                 </AccordionItem>

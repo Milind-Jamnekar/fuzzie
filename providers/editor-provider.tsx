@@ -131,7 +131,6 @@ type EditorProps = {
 
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
-
   return (
     <EditorContext.Provider
       value={{

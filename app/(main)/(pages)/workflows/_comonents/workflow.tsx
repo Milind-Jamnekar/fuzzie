@@ -12,12 +12,25 @@ import { Switch } from "@/components/ui/switch";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { onGetWorkflows } from "../_actions/workflow-connections";
 
-export function Workflows() {
+export async function Workflows() {
+  const workflows = await onGetWorkflows();
+
   return (
     <div className="relative flex flex-col gap-4">
+      {workflows?.length === 0 && <EmptyWorkflowComp />}
       <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <Workflow
+        {workflows?.map((workflow) => (
+          <Workflow
+            name={workflow.name}
+            description={workflow.description}
+            id={workflow.id}
+            publish={workflow.publish}
+            key={workflow.id}
+          />
+        ))}
+        {/* <Workflow
           name="Test workflow "
           description="Test workflow component name"
           id="123123"
@@ -28,7 +41,7 @@ export function Workflows() {
           description="Test workflow component name"
           id="123123"
           publish={false}
-        />
+        /> */}
       </section>
     </div>
   );
@@ -91,7 +104,7 @@ export function Workflow({ name, description, id, publish }: WorkflowProps) {
 
 function EmptyWorkflowComp() {
   return (
-    <div className="mt-28 flex text-muted-foreground items-center justify-center">
+    <div className="mt-28 w-full flex text-muted-foreground items-center justify-center">
       <div className="flex flex-col gap-4 items-center">
         <h2 className="text-2xl text-white">
           Start creating your first Workflows
@@ -99,7 +112,7 @@ function EmptyWorkflowComp() {
         <CustomDialog
           title="Create a Workflow Automation"
           description="Workflows are powerfull that helps you to automate tasks"
-          form={<WorkflowForm />}
+          formElement={<WorkflowForm />}
         >
           <Button>
             <Plus className="h-5 w-5 mr-2" />
