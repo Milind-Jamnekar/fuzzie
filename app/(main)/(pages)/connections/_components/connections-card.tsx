@@ -1,4 +1,4 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -29,36 +29,43 @@ function ConnectionCard({
   type,
 }: Props) {
   return (
-    <Card>
+    <Card className="@container">
       <CardHeader>
-        <div className="flex justify-between gap-4 items-start">
+        <div className="flex justify-between gap-4 items-start flex-col @sm:flex-row @sm:gap-4">
           <Image
             src={icon}
             alt={title}
-            className="object-contain bg-secondary p-2 rounded-xl border border-foreground/20"
+            className="object-contain bg-secondary p-2 rounded-lg border border-foreground/20"
             width={50}
             height={50}
           />
           <div>
-            <CardTitle className="xl:mb-3">{title}</CardTitle>
+            <CardTitle className="mb-3 @sm:mb-0">{title}</CardTitle>
             <CardDescription>{description}</CardDescription>
           </div>
 
-          {JSON.stringify(process.env.SLACK_REDIRECT_URI)}
-          {/* <Link
-            href={
-              title === "Discord"
-                ? process.env.NEXT_PUBLIC_DISCORD_REDIRECT!
-                : title === "Notion"
-                ? process.env.NOTION_REDIRECT_URI!
-                : title === "Slack"
-                ? process.env.SLACK_REDIRECT_URI!
-                : "#"
-            }
-            className={buttonVariants({ variant: "secondary" })}
-          >
-            Connect
-          </Link> */}
+          <div className="flex flex-col items-center gap-2">
+            {connected[type] ? (
+              <Button variant="outline" disabled>
+                Connected
+              </Button>
+            ) : (
+              <Link
+                href={
+                  title === "Discord"
+                    ? process.env.NEXT_PUBLIC_DISCORD_REDIRECT!
+                    : title === "Notion"
+                    ? process.env.NEXT_PUBLIC_NOTION_AUTH_URL!
+                    : title === "Slack"
+                    ? process.env.SLACK_REDIRECT_URI!
+                    : "#"
+                }
+                className={buttonVariants({ variant: "secondary" })}
+              >
+                Connect
+              </Link>
+            )}
+          </div>
         </div>
       </CardHeader>
     </Card>

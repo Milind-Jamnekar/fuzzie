@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useNodeConnections } from "@/providers/connections-provider";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   onCreateNodesEdges,
@@ -16,27 +16,30 @@ type Props = {
 };
 
 const FlowInstance = ({ children, edges, nodes }: Props) => {
-  const pathname = usePathname();
+  const { editorId } = useParams<{ editorId: string }>();
   const [isFlow, setIsFlow] = useState([]);
   const { nodeConnection } = useNodeConnections();
 
-  const onFlowAutomation = useCallback(async () => {
-    const flow = await onCreateNodesEdges(
-      pathname.split("/").pop()!,
+  const onFlowAutomation = useCallback(() => {
+    const flowPromise = onCreateNodesEdges(
+      editorId,
       JSON.stringify(nodes),
       JSON.stringify(edges),
       JSON.stringify(isFlow)
     );
+    toast.promise(flowPromise, {
+      loading: "Saving flow...",
+      success: (data) => `${data.message}`,
+      error: "Error",
+    });
+  }, [edges, isFlow, nodes]);
 
-    if (flow) toast.message(flow.message);
-  }, [nodeConnection]);
+  // const onPublishWorkflow = useCallback(async () => {
+  //   const response = await onFlowPublish(editorId, true);
+  //   if (response) toast.message(response);
+  // }, [pathname]);
 
-  const onPublishWorkflow = useCallback(async () => {
-    const response = await onFlowPublish(pathname.split("/").pop()!, true);
-    if (response) toast.message(response);
-  }, []);
-
-  const onAutomateFlow = async () => {
+  const onAutomateFlow = useCallback(() => {
     const flows: any = [];
     const connectedEdges = edges.map((edge) => edge.target);
     connectedEdges.map((target) => {
@@ -48,11 +51,11 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
     });
 
     setIsFlow(flows);
-  };
+  }, [edges, nodes]);
 
   useEffect(() => {
     onAutomateFlow();
-  }, [edges]);
+  }, [onAutomateFlow]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -60,9 +63,9 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
         <Button onClick={onFlowAutomation} disabled={isFlow.length < 1}>
           Save
         </Button>
-        <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
+        {/* <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
           Publish
-        </Button>
+        </Button> */}
       </div>
       {children}
     </div>

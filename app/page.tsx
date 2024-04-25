@@ -12,6 +12,7 @@ import Link from "next/link";
 
 export default function Home() {
   //WIP: remove fault IMAge for home page
+  // const user = user
   return (
     <main className="flex items-center justify-center flex-col">
       <Navbar />

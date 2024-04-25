@@ -8,22 +8,26 @@ export const onCreateNodesEdges = async (
   edges: string,
   flowPath: string
 ) => {
-  const flow = await db.workflows.update({
-    where: {
-      id: flowId,
-    },
-    data: {
-      nodes,
-      edges,
-      flowPath: flowPath,
-    },
-  });
+  try {
+    const flow = await db.workflows.update({
+      where: {
+        id: flowId,
+      },
+      data: {
+        nodes,
+        edges,
+        flowPath: flowPath,
+      },
+    });
 
-  if (flow) return { message: "flow saved" };
+    if (flow) return { message: "Flow is saved" };
+    else return { message: "Flow is not created " };
+  } catch (error) {
+    return { message: "Failed to save flow!...Error from db" };
+  }
 };
 
 export const onFlowPublish = async (workflowId: string, state: boolean) => {
-  console.log(state);
   const published = await db.workflows.update({
     where: {
       id: workflowId,

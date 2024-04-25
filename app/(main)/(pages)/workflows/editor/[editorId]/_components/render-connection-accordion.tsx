@@ -79,44 +79,40 @@ const RenderConnectionAccordion = ({
       connectionData[accessTokenKey!]);
 
   return (
-    <AccordionContent key={title}>
-      {state.editor.selectedNode.data.title === title && (
-        <>
-          <ConnectionCard
-            callback={() => {}}
-            title={title}
-            icon={image}
-            description={description}
-            type={title}
-            connected={{ [title]: isConnected }}
-          />
-          {slackSpecial && isConnected && (
-            <div className="p-6">
-              {slackChannels?.length ? (
-                <>
-                  <div className="mb-4 ml-1">
-                    Select the slack channels to send notification and messages:
-                  </div>
-                  <MultipleSelector
-                    value={selectedSlackChannels}
-                    onChange={setSelectedSlackChannels}
-                    defaultOptions={slackChannels}
-                    placeholder="Select channels"
-                    emptyIndicator={
-                      <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                        no results found.
-                      </p>
-                    }
-                  />
-                </>
-              ) : (
-                "No Slack channels found. Please add your Slack bot to your Slack channel"
-              )}
-            </div>
+    <>
+      <ConnectionCard
+        callback={() => {}}
+        title={title}
+        icon={image}
+        description={description}
+        type={title}
+        connected={{ [title]: isConnected }}
+      />
+      {slackSpecial && isConnected && (
+        <div className="p-6">
+          {slackChannels?.length ? (
+            <>
+              <div className="mb-4 ml-1">
+                Select the slack channels to send notification and messages:
+              </div>
+              <MultipleSelector
+                value={selectedSlackChannels}
+                onChange={setSelectedSlackChannels}
+                defaultOptions={slackChannels}
+                placeholder="Select channels"
+                emptyIndicator={
+                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                    no results found.
+                  </p>
+                }
+              />
+            </>
+          ) : (
+            "No Slack channels found. Please add your Slack bot to your Slack channel"
           )}
-        </>
+        </div>
       )}
-    </AccordionContent>
+    </>
   );
 };
 

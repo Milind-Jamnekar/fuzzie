@@ -23,11 +23,15 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { toast } from "sonner";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { v4 } from "uuid";
 import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
 import FlowInstance from "./flow-instance";
 import EditorCanvasSidebar from "./editor-canvas-sidebar";
+import {
+  onGetNodesEdges,
+  onGetWorkflows,
+} from "../../../_actions/workflow-connections";
 
 type Props = {};
 
@@ -42,7 +46,7 @@ const EditorCanvas = (props: Props) => {
   const [isWorkFlowLoading, setIsWorkFlowLoading] = useState<boolean>(false);
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance>();
-  const pathname = usePathname();
+  const { editorId } = useParams<{ editorId: string }>();
 
   const onDragOver = useCallback((event: any) => {
     event.preventDefault();
@@ -143,6 +147,21 @@ const EditorCanvas = (props: Props) => {
   useEffect(() => {
     dispatch({ type: "LOAD_DATA", payload: { edges, elements: nodes } });
   }, [nodes, edges]);
+
+  const onGetWorkFlow = useCallback(async () => {
+    setIsWorkFlowLoading(true);
+    const response = await onGetNodesEdges(editorId);
+    if (response) {
+      setEdges(JSON.parse(response.edges!));
+      setNodes(JSON.parse(response.nodes!));
+      setIsWorkFlowLoading(false);
+    }
+    setIsWorkFlowLoading(false);
+  }, [editorId]);
+
+  useEffect(() => {
+    onGetWorkFlow();
+  }, [onGetWorkFlow]);
 
   const nodeTypes = useMemo(
     () => ({
