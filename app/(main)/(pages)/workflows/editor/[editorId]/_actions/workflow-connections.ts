@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export const onCreateNodesEdges = async (
   flowId: string,
@@ -28,15 +29,21 @@ export const onCreateNodesEdges = async (
 };
 
 export const onFlowPublish = async (workflowId: string, state: boolean) => {
-  const published = await db.workflows.update({
-    where: {
-      id: workflowId,
-    },
-    data: {
-      publish: state,
-    },
-  });
+  try {
+    const published = await db.workflows.update({
+      where: {
+        id: workflowId,
+      },
+      data: {
+        publish: state,
+      },
+    });
 
-  if (published.publish) return "Workflow published";
-  return "Workflow unpublished";
+    if (published.publish) return "Workflow published";
+    return "Workflow un-published";
+  } catch (error) {
+    return JSON.stringify(error);
+  } finally {
+    revalidatePath("/workflows"); //whatever path you are calling it from
+  }
 };
