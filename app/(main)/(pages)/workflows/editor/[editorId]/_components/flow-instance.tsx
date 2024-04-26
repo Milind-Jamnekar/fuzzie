@@ -62,7 +62,7 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   }, [onAutomateFlow]);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col ">
       <div className="flex gap-3 p-4">
         <Button onClick={onFlowAutomation} disabled={isFlow.length < 1}>
           Save
