@@ -98,7 +98,7 @@ const MenuOptions = () => {
                   <Link
                     href={menuItem.href}
                     className={clsx(
-                      "group h-9 w-9 flex justify-start sm:justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-10 md:w-10 cursor-pointer",
+                      "group h-9 w-9 flex items-center sm:justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-10 md:w-10 cursor-pointer",
                       {
                         "dark:bg-[#2F006B] bg-[#EEE0FF] ":
                           pathName === menuItem.href,
