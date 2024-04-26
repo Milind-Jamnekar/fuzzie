@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 import { dark } from "@clerk/themes";
+import { cn } from "@/lib/utils";
 
 // import { UserButton } from "@clerk/nextjs";
 // import { useBilling } from "@/providers/billing-provider";
@@ -48,15 +49,14 @@ const InfoBar = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[200px] p-3 py-11">
-            <div className="flex h-full flex-col gap-3">
+            <div className="flex h-full flex-col gap-4">
               {menuOptions.map((menuItem) => (
                 <SheetClose key={menuItem.href} asChild>
                   <Link
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "!justify-start gap-4",
-                    })}
-                    key={menuItem.href}
+                    className={cn([
+                      "flex items-center gap-3 p-4 rounded-xl hover:bg-secondary",
+                      pathName === menuItem.href && "bg-secondary",
+                    ])}
                     href={menuItem.href}
                   >
                     <menuItem.Component selected={pathName === menuItem.href} />
