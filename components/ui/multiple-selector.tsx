@@ -228,7 +228,7 @@ const MultipleSelector = React.forwardRef<
           }
         }
       },
-      [selected]
+      [handleUnselect, selected]
     );
 
     useEffect(() => {
