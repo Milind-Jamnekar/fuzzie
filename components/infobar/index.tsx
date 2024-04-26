@@ -9,11 +9,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { menuOptions } from "@/lib/constant";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { dark } from "@clerk/themes";
+
 // import { UserButton } from "@clerk/nextjs";
 // import { useBilling } from "@/providers/billing-provider";
 // import { onPaymentDetails } from "@/app/(main)/(pages)/billing/_actions/payment-connecetions";
@@ -37,34 +39,39 @@ const InfoBar = () => {
   //   }, []);
 
   return (
-    <div className="flex flex-row justify-end gap-6 items-center px-4 py-4 w-full dark:bg-black">
+    <div className="flex flex-row justify-between md:justify-end gap-6 items-center px-4 py-4 w-full dark:bg-black">
       <div className="md:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost">
-              <PanelRightClose />
+            <Button variant="ghost" size="icon">
+              <PanelRightClose className="stroke-orange-100" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[250px]">
-            <div className="flex h-full flex-col gap-5">
+          <SheetContent side="left" className="w-[250px] p-3 py-11">
+            <div className="flex h-full flex-col gap-3">
               {menuOptions.map((menuItem) => (
-                <Link
-                  className={buttonVariants({
-                    variant: "ghost",
-                    className: "items-start gap-4",
-                  })}
-                  key={menuItem.href}
-                  href={menuItem.href}
-                >
-                  <menuItem.Component selected={pathName === menuItem.href} />
-                  <span>{menuItem.name}</span>
-                  <span className="sr-only">{menuItem.name}</span>
-                </Link>
+                <SheetClose key={menuItem.href} asChild>
+                  <Link
+                    className={buttonVariants({
+                      variant: "ghost",
+                      className: "!justify-start gap-4",
+                    })}
+                    key={menuItem.href}
+                    href={menuItem.href}
+                  >
+                    <menuItem.Component selected={pathName === menuItem.href} />
+                    <span>{menuItem.name}</span>
+                    <span className="sr-only">{menuItem.name}</span>
+                  </Link>
+                </SheetClose>
               ))}
-              <div className="flex items-center gap-5 grow">
-                <UserButton />
-                <h2 className="text-white">{user?.fullName}</h2>
-              </div>
+            </div>
+            <div className="flex items-center gap-5 grow">
+              <UserButton
+                afterSignOutUrl="/"
+                showName
+                appearance={{ baseTheme: dark }}
+              />
             </div>
           </SheetContent>
         </Sheet>
@@ -107,7 +114,7 @@ const InfoBar = () => {
         </Tooltip>
       </TooltipProvider>
       <div className="hidden md:flex">
-        <UserButton />
+        <UserButton afterSignOutUrl="/" appearance={{ baseTheme: dark }} />
       </div>
     </div>
   );
