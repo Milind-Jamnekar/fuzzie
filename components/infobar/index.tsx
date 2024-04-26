@@ -47,7 +47,7 @@ const InfoBar = () => {
               <PanelRightClose className="stroke-orange-100" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[250px] p-3 py-11">
+          <SheetContent side="left" className="w-[200px] p-3 py-11">
             <div className="flex h-full flex-col gap-3">
               {menuOptions.map((menuItem) => (
                 <SheetClose key={menuItem.href} asChild>
@@ -66,7 +66,7 @@ const InfoBar = () => {
                 </SheetClose>
               ))}
             </div>
-            <div className="flex items-center gap-5 grow">
+            <div className="ml-3">
               <UserButton
                 afterSignOutUrl="/"
                 showName
