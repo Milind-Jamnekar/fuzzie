@@ -23,11 +23,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
 import RenderConnectionAccordion from "./render-connection-accordion";
 import RenderOutputAccordion from "./render-output-accordion";
 import { useFuzzieStore } from "@/lib/store";
+import { onDragStart } from "@/lib/editor-utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -56,14 +57,19 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   //   }
   // }, [nodeConnection]);
 
+  const TAGS = Array.from({ length: 50 }).map(
+    (_, i, a) => `v1.2.0-beta.${a.length - i}`
+  );
+
   return (
     <aside className="@container">
-      <ScrollArea className="rounded-md h-screen border m-4 p-3">
+      <ScrollArea className="rounded-xl h-screen border m-4 p-4 pb-44">
         <Tabs defaultValue="actions">
-          <TabsList className="grid w-full grid-cols-2 sticky top-0">
+          <TabsList className="grid w-full grid-cols-2 sticky top-0 ">
             <TabsTrigger value="actions">Actions</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+          {/* Actions tab content  */}
           <TabsContent
             value="actions"
             className="grid grid-cols-1 @xl:grid-cols-2 @3xl:grid-cols-3 gap-4 "
@@ -76,10 +82,10 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
               )
               .map(([cardKey, cardValue]) => (
                 <Card
+                  className="cursor-move hover:border-white/40"
                   key={cardKey}
                   draggable
                   onDragStart={(event) => {
-                    //   onDragStart(event, cardKey as EditorCanvasTypes)
                     event.dataTransfer.setData(
                       "application/reactflow",
                       cardKey as EditorCanvasTypes
@@ -99,6 +105,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                 </Card>
               ))}
           </TabsContent>
+          {/* Settings tab content  */}
           <TabsContent value="settings" className="">
             <div className="px-2 py-4 text-center text-xl font-bold ">
               {state.editor.selectedNode.data.title}
