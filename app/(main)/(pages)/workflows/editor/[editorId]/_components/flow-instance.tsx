@@ -1,16 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useNodeConnections } from "@/providers/connections-provider";
-import { useParams, usePathname } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { ReactNode, useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import {
   onCreateNodesEdges,
   onFlowPublish,
 } from "../_actions/workflow-connections";
-import { toast } from "sonner";
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
   edges: any[];
   nodes: any[];
 };
@@ -32,12 +32,16 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
       success: (data) => `${data.message}`,
       error: "Error",
     });
-  }, [edges, isFlow, nodes]);
+  }, [edges, editorId, isFlow, nodes]);
 
-  // const onPublishWorkflow = useCallback(async () => {
-  //   const response = await onFlowPublish(editorId, true);
-  //   if (response) toast.message(response);
-  // }, [pathname]);
+  const onPublishWorkflow = useCallback(async () => {
+    const publishPromise = onFlowPublish(editorId, true);
+    toast.promise(publishPromise, {
+      loading: "Publishing flow...",
+      success: (data) => `${data}`,
+      error: "Error",
+    });
+  }, [editorId]);
 
   const onAutomateFlow = useCallback(() => {
     const flows: any = [];
@@ -63,9 +67,9 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
         <Button onClick={onFlowAutomation} disabled={isFlow.length < 1}>
           Save
         </Button>
-        {/* <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
+        <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
           Publish
-        </Button> */}
+        </Button>
       </div>
       {children}
     </div>

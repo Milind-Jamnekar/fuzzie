@@ -3,7 +3,7 @@ import { CustomDialog } from "@/components/modals/custom-dialog";
 import { MainPageTitle } from "@/components/reusable";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Workflows } from "./_comonents/workflow";
+import { Workflows } from "./_comonents/workflows";
 import { Separator } from "@/components/ui/separator";
 
 function WorkflowsPage() {
