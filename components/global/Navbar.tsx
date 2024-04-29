@@ -1,7 +1,10 @@
+import { UserButton, currentUser } from "@clerk/nextjs";
+import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export async function Navbar() {
+  const user = await currentUser();
   return (
     <header
       className="fixed top-0 left-0 right-0 p-4
@@ -50,8 +53,8 @@ export async function Navbar() {
             {true ? "Dashboard" : "Get Started"}
           </span>
         </Link>
-        {/* {user ? <UserButton afterSignOutUrl="/" /> : null} */}
-        {/* <MenuIcon className="md:hidden" /> */}
+        {user ? <UserButton afterSignOutUrl="/" /> : null}
+        <MenuIcon className="md:hidden" />
       </aside>
     </header>
   );
