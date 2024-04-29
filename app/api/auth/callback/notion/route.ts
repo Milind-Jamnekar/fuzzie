@@ -5,6 +5,10 @@ import { Client } from "@notionhq/client";
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
+  const url = process.env.URL || "http://localhost:3000";
+
+  const redirectUrl = `${url}/api/auth/callback/notion`;
+
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
   ).toString("base64");
@@ -20,7 +24,7 @@ export async function GET(req: NextRequest) {
         data: JSON.stringify({
           grant_type: "authorization_code",
           code: code,
-          redirect_uri: process.env.NOTION_REDIRECT_URI!,
+          redirect_uri: redirectUrl,
         }),
       });
       if (response) {
@@ -41,10 +45,8 @@ export async function GET(req: NextRequest) {
           ? databasesPages.results[0].id
           : "";
 
-        console.log(databaseId);
-
         return NextResponse.redirect(
-          `https://localhost:3000/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+          `${url}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
         );
       }
     } catch (error) {
@@ -64,5 +66,5 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  return NextResponse.redirect("http://localhost:3000/connections");
+  return NextResponse.redirect(`${url}/connections`);
 }
