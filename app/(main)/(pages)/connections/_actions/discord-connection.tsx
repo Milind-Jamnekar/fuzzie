@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
+import { Prisma } from "@prisma/client";
 import axios from "axios";
 
 export const onDiscordConnect = async (
@@ -89,4 +90,51 @@ export const onDiscordConnect = async (
       }
     }
   }
+};
+
+export const getDiscordConnectionUrl = async () => {
+  const user = await currentUser();
+  if (user) {
+    try {
+      const webhook = await db.discordWebhook.findFirst({
+        where: { userId: user.id },
+        select: { url: true, name: true, guildName: true },
+      });
+
+      if (webhook) {
+        return webhook;
+      } else {
+        // Handle the case where no webhook is found gracefully
+        console.warn("No Discord webhook found for user", user.id);
+        return null; // Or return a default value as needed
+      }
+    } catch (error) {
+      // Catch specific Prisma errors
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          // Handle "Record not found" error
+          console.warn("No Discord webhook found for user", user.id);
+          return null; // Or return a default value as needed
+        } else {
+          console.error("Prisma request error:", error.code, error.message);
+          throw new Error("Failed to get Discord connection URL");
+        }
+      } else {
+        // Handle unexpected errors
+        console.error("Unexpected error in getDiscordConnectionUrl:", error);
+        throw new Error("An unknown error occurred");
+      }
+    }
+  }
+};
+
+export const postContentToWebHook = async (content: string, url: string) => {
+  if (content != "") {
+    const posted = await axios.post(url, { content });
+    if (posted) {
+      return { message: "success" };
+    }
+    return { message: "failed request" };
+  }
+  return { message: "String empty" };
 };

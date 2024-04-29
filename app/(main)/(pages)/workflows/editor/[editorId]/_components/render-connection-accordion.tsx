@@ -77,6 +77,7 @@ const RenderConnectionAccordion = ({
     (nodeConnection[connectionKey] &&
       accessTokenKey &&
       connectionData[accessTokenKey!]);
+  console.log(slackChannels);
 
   return (
     <>
@@ -91,22 +92,23 @@ const RenderConnectionAccordion = ({
       {slackSpecial && isConnected && (
         <div className="p-6">
           {slackChannels?.length ? (
-            <>
-              <div className="mb-4 ml-1">
-                Select the slack channels to send notification and messages:
-              </div>
-              <MultipleSelector
-                value={selectedSlackChannels}
-                onChange={setSelectedSlackChannels}
-                defaultOptions={slackChannels}
-                placeholder="Select channels"
-                emptyIndicator={
-                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                    no results found.
-                  </p>
-                }
-              />
-            </>
+            // <>
+            //   <div className="mb-4 ml-1">
+            //     Select the slack channels to send notification and messages:
+            //   </div>
+            //   <MultipleSelector
+            //     value={selectedSlackChannels}
+            //     onChange={setSelectedSlackChannels}
+            //     defaultOptions={slackChannels}
+            //     placeholder="Select channels"
+            //     emptyIndicator={
+            //       <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+            //         no results found.
+            //       </p>
+            //     }
+            //   />
+            // </>
+            <div>nothing </div>
           ) : (
             "No Slack channels found. Please add your Slack bot to your Slack channel"
           )}

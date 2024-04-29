@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
 import { Option } from "./content-based-on-title";
 import { ConnectionProviderProps } from "@/providers/connections-provider";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { onCreateNodeTemplate } from "../../../_actions/workflow-connections";
 import { toast } from "sonner";
-// import { onCreateNewPageInDatabase } from "@/app/(main)/(pages)/connections/_actions/notion-connection";
-// import { postMessageToSlack } from "@/app/(main)/(pages)/connections/_actions/slack-connection";
-// import { postContentToWebHook } from "@/app/(main)/(pages)/connections/_actions/discord-connection";
+import { postContentToWebHook } from "@/app/(main)/(pages)/connections/_actions/discord-connection";
+import { onCreateNewPageInDatabase } from "@/app/(main)/(pages)/connections/_actions/notion-connection";
+import { postMessageToSlack } from "@/app/(main)/(pages)/connections/_actions/slack-connection";
 
 type Props = {
   currentService: string;
@@ -22,65 +22,65 @@ const ActionButton = ({
   channels,
   setChannels,
 }: Props) => {
-  const pathname = usePathname();
+  const { editorId } = useParams<{ editorId: string }>();
 
-  // const onSendDiscordMessage = useCallback(async () => {
-  //   const response = await postContentToWebHook(
-  //     nodeConnection.discordNode.content,
-  //     nodeConnection.discordNode.webhookURL
-  //   );
+  const onSendDiscordMessage = useCallback(async () => {
+    const response = await postContentToWebHook(
+      nodeConnection.discordNode.content,
+      nodeConnection.discordNode.webhookURL
+    );
 
-  //   if (response.message == "success") {
-  //     nodeConnection.setDiscordNode((prev: any) => ({
-  //       ...prev,
-  //       content: "",
-  //     }));
-  //   }
-  // }, [nodeConnection.discordNode]);
+    if (response.message == "success") {
+      nodeConnection.setDiscordNode((prev: any) => ({
+        ...prev,
+        content: "",
+      }));
+    }
+  }, [nodeConnection.discordNode]);
 
-  // const onStoreNotionContent = useCallback(async () => {
-  //   console.log(
-  //     nodeConnection.notionNode.databaseId,
-  //     nodeConnection.notionNode.accessToken,
-  //     nodeConnection.notionNode.content
-  //   );
-  //   const response = await onCreateNewPageInDatabase(
-  //     nodeConnection.notionNode.databaseId,
-  //     nodeConnection.notionNode.accessToken,
-  //     nodeConnection.notionNode.content
-  //   );
-  //   if (response) {
-  //     nodeConnection.setNotionNode((prev: any) => ({
-  //       ...prev,
-  //       content: "",
-  //     }));
-  //   }
-  // }, [nodeConnection.notionNode]);
+  const onStoreNotionContent = useCallback(async () => {
+    console.log(
+      nodeConnection.notionNode.databaseId,
+      nodeConnection.notionNode.accessToken,
+      nodeConnection.notionNode.content
+    );
+    const response = await onCreateNewPageInDatabase(
+      nodeConnection.notionNode.databaseId,
+      nodeConnection.notionNode.accessToken,
+      nodeConnection.notionNode.content
+    );
+    if (response) {
+      nodeConnection.setNotionNode((prev: any) => ({
+        ...prev,
+        content: "",
+      }));
+    }
+  }, [nodeConnection.notionNode]);
 
-  // const onStoreSlackContent = useCallback(async () => {
-  //   const response = await postMessageToSlack(
-  //     nodeConnection.slackNode.slackAccessToken,
-  //     channels!,
-  //     nodeConnection.slackNode.content
-  //   );
-  //   if (response.message == "Success") {
-  //     toast.success("Message sent successfully");
-  //     nodeConnection.setSlackNode((prev: any) => ({
-  //       ...prev,
-  //       content: "",
-  //     }));
-  //     setChannels!([]);
-  //   } else {
-  //     toast.error(response.message);
-  //   }
-  // }, [nodeConnection.slackNode, channels]);
+  const onStoreSlackContent = useCallback(async () => {
+    const response = await postMessageToSlack(
+      nodeConnection.slackNode.slackAccessToken,
+      channels!,
+      nodeConnection.slackNode.content
+    );
+    if (response.message == "Success") {
+      toast.success("Message sent successfully");
+      nodeConnection.setSlackNode((prev: any) => ({
+        ...prev,
+        content: "",
+      }));
+      setChannels!([]);
+    } else {
+      toast.error(response.message);
+    }
+  }, [nodeConnection.slackNode, channels]);
 
   const onCreateLocalNodeTempate = useCallback(async () => {
     if (currentService === "Discord") {
       const response = await onCreateNodeTemplate(
         nodeConnection.discordNode.content,
         currentService,
-        pathname.split("/").pop()!
+        editorId
       );
 
       if (response) {
@@ -91,7 +91,7 @@ const ActionButton = ({
       const response = await onCreateNodeTemplate(
         nodeConnection.slackNode.content,
         currentService,
-        pathname.split("/").pop()!,
+        editorId,
         channels,
         nodeConnection.slackNode.slackAccessToken
       );
@@ -105,7 +105,7 @@ const ActionButton = ({
       const response = await onCreateNodeTemplate(
         JSON.stringify(nodeConnection.notionNode.content),
         currentService,
-        pathname.split("/").pop()!,
+        editorId,
         [],
         nodeConnection.notionNode.accessToken,
         nodeConnection.notionNode.databaseId
@@ -122,10 +122,7 @@ const ActionButton = ({
       case "Discord":
         return (
           <>
-            <Button
-              variant="outline"
-              // onClick={onSendDiscordMessage}
-            >
+            <Button variant="outline" onClick={onSendDiscordMessage}>
               Test Message
             </Button>
             <Button onClick={onCreateLocalNodeTempate} variant="outline">
@@ -137,10 +134,7 @@ const ActionButton = ({
       case "Notion":
         return (
           <>
-            <Button
-              variant="outline"
-              // onClick={onStoreNotionContent}
-            >
+            <Button variant="outline" onClick={onStoreNotionContent}>
               Test
             </Button>
             <Button onClick={onCreateLocalNodeTempate} variant="outline">
@@ -152,10 +146,7 @@ const ActionButton = ({
       case "Slack":
         return (
           <>
-            <Button
-              variant="outline"
-              // onClick={onStoreSlackContent}
-            >
+            <Button variant="outline" onClick={onStoreSlackContent}>
               Send Message
             </Button>
             <Button onClick={onCreateLocalNodeTempate} variant="outline">

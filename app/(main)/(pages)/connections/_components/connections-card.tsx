@@ -57,7 +57,7 @@ function ConnectionCard({
                     : title === "Notion"
                     ? process.env.NEXT_PUBLIC_NOTION_AUTH_URL!
                     : title === "Slack"
-                    ? process.env.SLACK_REDIRECT_URI!
+                    ? process.env.NEXT_PUBLIC_SLACK_REDIRECT!
                     : "#"
                 }
                 className={buttonVariants({ variant: "secondary" })}

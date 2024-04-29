@@ -27,8 +27,13 @@ import EditorCanvasIconHelper from "./editor-canvas-icon-helper";
 import RenderConnectionAccordion from "./render-connection-accordion";
 import RenderOutputAccordion from "./render-output-accordion";
 import { useFuzzieStore } from "@/lib/store";
-import { onDragStart } from "@/lib/editor-utils";
+import {
+  fetchBotSlackChannels,
+  onConnections,
+  onDragStart,
+} from "@/lib/editor-utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -42,24 +47,23 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   );
 
   const { googleFile, setSlackChannels } = useFuzzieStore();
-  //   useEffect(() => {
-  //     if (state) {
-  //       onConnections(nodeConnection, state, googleFile);
-  //     }
-  //   }, [state]);
 
-  // useEffect(() => {
-  //   if (nodeConnection.slackNode.slackAccessToken) {
-  //     fetchBotSlackChannels(
-  //       nodeConnection.slackNode.slackAccessToken,
-  //       setSlackChannels
-  //     );
-  //   }
-  // }, [nodeConnection]);
+  useEffect(() => {
+    if (state) {
+      onConnections(nodeConnection, state, googleFile);
+    }
+  }, [googleFile, nodeConnection, state]);
 
-  const TAGS = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`
-  );
+  useEffect(() => {
+    if (nodeConnection.slackNode.slackAccessToken) {
+      fetchBotSlackChannels(
+        nodeConnection.slackNode.slackAccessToken,
+        setSlackChannels
+      );
+    }
+  }, [nodeConnection]);
+
+  console.log(nodeConnection.slackNode);
 
   return (
     <aside className="@container">
@@ -119,8 +123,8 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                   </AccordionTrigger>
                   <AccordionContent>
                     <RenderConnectionAccordion
-                      state={state}
                       connection={selectedNode[0]}
+                      state={state}
                     />
                   </AccordionContent>
                 </AccordionItem>
