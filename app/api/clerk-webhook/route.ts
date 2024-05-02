@@ -1,33 +1,55 @@
 import { db } from "@/lib/db";
+import { WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { id, email_addresses, first_name, image_url } = body?.data;
+    const { type, data }: WebhookEvent = await req.json();
 
-    const email = email_addresses[0]?.email_address;
+    switch (type) {
+      case "user.created": {
+        const { first_name, image_url, id, email_addresses } = data;
+        const email = email_addresses[0].email_address;
 
-    await db.user.upsert({
-      where: { clerkId: id },
-      update: { email, name: first_name, profileImage: image_url },
-      create: {
-        clerkId: id,
-        email,
-        name: first_name || "",
-        profileImage: image_url || "",
-      },
-    });
+        await db.user.create({
+          data: {
+            clerkId: id,
+            email,
+            name: first_name || "",
+            profileImage: image_url || "",
+          },
+        });
 
-    return new NextResponse("User updated in database successfully", {
-      status: 200,
-    });
+        return new NextResponse("User created in database successfully", {
+          status: 200,
+        });
+      }
+
+      case "user.updated": {
+        const { first_name, image_url, id, email_addresses } = data;
+        const email = email_addresses[0].email_address;
+        await db.user.update({
+          where: { clerkId: id },
+          data: {
+            email,
+            name: first_name || "",
+            profileImage: image_url || "",
+          },
+        });
+
+        return new NextResponse("User updated in database successfully", {
+          status: 200,
+        });
+      }
+    }
   } catch (error) {
     console.log("error in updating user in database successfully");
     return new NextResponse("error in updating user in database successfully", {
       status: 500,
     });
   }
+}
 
-  // catch
+export async function GET() {
+  return Response.json({ message: "Hello World!" });
 }
