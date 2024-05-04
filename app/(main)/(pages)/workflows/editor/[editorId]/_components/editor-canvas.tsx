@@ -146,7 +146,7 @@ const EditorCanvas = (props: Props) => {
 
   useEffect(() => {
     dispatch({ type: "LOAD_DATA", payload: { edges, elements: nodes } });
-  }, [nodes, edges]);
+  }, [dispatch, edges, nodes]);
 
   const onGetWorkFlow = useCallback(async () => {
     setIsWorkFlowLoading(true);

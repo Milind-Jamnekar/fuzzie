@@ -9,13 +9,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { menuOptions } from "@/lib/constant";
-import { SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { cn } from "@/lib/utils";
+import { UserButton } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { dark } from "@clerk/themes";
-import { cn } from "@/lib/utils";
 
 // import { UserButton } from "@clerk/nextjs";
 // import { useBilling } from "@/providers/billing-provider";
@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 
 const InfoBar = () => {
   const pathName = usePathname();
-  const { user } = useUser();
+  // const { user } = useUser();
 
   //   const { credits, tier, setCredits, setTier } = useBilling();
 

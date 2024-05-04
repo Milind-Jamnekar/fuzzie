@@ -135,12 +135,7 @@ const MenuOptions = () => {
           </div> */}
 
           <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <ModeToggle />
-              </TooltipTrigger>
-              <TooltipContent side="right">Settings</TooltipContent>
-            </Tooltip>
+            <ModeToggle />
           </nav>
         </TooltipProvider>
       </aside>
