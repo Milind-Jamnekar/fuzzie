@@ -7,6 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CONNECTIONS } from "@/lib/constant";
 import { ConnectionTypes } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -70,6 +72,24 @@ function ConnectionCard({
       </CardHeader>
     </Card>
   );
+}
+
+export function ConnectionSkeleton() {
+  return CONNECTIONS.map((connection) => (
+    <Card key={connection.title}>
+      <CardHeader>
+        <div className="flex gap-4 items-start">
+          <Skeleton className="h-[50px] w-[50px] rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-[250px]" />
+            <Skeleton className="h-4 w-[200px]" />
+            <Skeleton className="h-4 w-[220px]" />
+          </div>
+          <Skeleton className="h-5 w-[50px]" />
+        </div>
+      </CardHeader>
+    </Card>
+  ));
 }
 
 export default ConnectionCard;
