@@ -8,7 +8,7 @@ type Props = {
   connection: ConnectionProviderProps;
 };
 
-function RenderOutputAccordion({ connection, state }: Props) {
+function RenderOutputAccordion() {
   const {
     googleFile,
     selectedSlackChannels,
@@ -20,8 +20,6 @@ function RenderOutputAccordion({ connection, state }: Props) {
   return (
     <ContentBasedOnTitle
       file={googleFile}
-      newState={state}
-      nodeConnection={connection}
       selectedSlackChannels={slackChannels}
       setFile={setGoogleFile}
       setSelectedSlackChannels={setSelectedSlackChannels}

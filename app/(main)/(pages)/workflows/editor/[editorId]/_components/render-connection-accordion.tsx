@@ -77,7 +77,6 @@ const RenderConnectionAccordion = ({
     (nodeConnection[connectionKey] &&
       accessTokenKey &&
       connectionData[accessTokenKey!]);
-  console.log(slackChannels);
 
   return (
     <>

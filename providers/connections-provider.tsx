@@ -1,5 +1,13 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 export type ConnectionProviderProps = {
   discordNode: {
@@ -8,9 +16,9 @@ export type ConnectionProviderProps = {
     webhookName: string;
     guildName: string;
   };
-  setDiscordNode: React.Dispatch<React.SetStateAction<any>>;
+  setDiscordNode: Dispatch<SetStateAction<any>>;
   googleNode: {}[];
-  setGoogleNode: React.Dispatch<React.SetStateAction<any>>;
+  setGoogleNode: Dispatch<SetStateAction<any>>;
   notionNode: {
     accessToken: string;
     databaseId: string;
@@ -22,7 +30,7 @@ export type ConnectionProviderProps = {
     notion?: string;
     slack?: string;
   };
-  setNotionNode: React.Dispatch<React.SetStateAction<any>>;
+  setNotionNode: Dispatch<SetStateAction<any>>;
   slackNode: {
     appId: string;
     authedUserId: string;
@@ -33,20 +41,20 @@ export type ConnectionProviderProps = {
     teamName: string;
     content: string;
   };
-  setSlackNode: React.Dispatch<React.SetStateAction<any>>;
-  setWorkFlowTemplate: React.Dispatch<
-    React.SetStateAction<{
+  setSlackNode: Dispatch<SetStateAction<any>>;
+  setWorkFlowTemplate: Dispatch<
+    SetStateAction<{
       discord?: string;
       notion?: string;
       slack?: string;
     }>
   >;
   isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 type ConnectionWithChildProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 const InitialValues: ConnectionProviderProps = {
@@ -92,26 +100,37 @@ const { Provider } = ConnectionsContext;
 
 export const ConnectionsProvider = ({ children }: ConnectionWithChildProps) => {
   const [discordNode, setDiscordNode] = useState(InitialValues.discordNode);
+  const memoizedDiscordNode = useMemo(() => discordNode, [discordNode]);
+
   const [googleNode, setGoogleNode] = useState(InitialValues.googleNode);
+  const memoizedGoogleNode = useMemo(() => googleNode, [googleNode]);
+
   const [notionNode, setNotionNode] = useState(InitialValues.notionNode);
+  const memoizedNotionNode = useMemo(() => notionNode, [notionNode]);
+
   const [slackNode, setSlackNode] = useState(InitialValues.slackNode);
-  const [isLoading, setIsLoading] = useState(InitialValues.isLoading);
+  const memoizedSlackNode = useMemo(() => slackNode, [slackNode]);
+
   const [workflowTemplate, setWorkFlowTemplate] = useState(
     InitialValues.workflowTemplate
   );
+  const memoizedWorkflowTemplate = useMemo(
+    () => workflowTemplate,
+    [workflowTemplate]
+  );
 
   const values = {
-    discordNode,
+    discordNode: memoizedDiscordNode,
     setDiscordNode,
-    googleNode,
+    googleNode: memoizedGoogleNode,
     setGoogleNode,
-    notionNode,
+    notionNode: memoizedNotionNode,
     setNotionNode,
-    slackNode,
+    slackNode: memoizedSlackNode,
     setSlackNode,
-    isLoading,
-    setIsLoading,
-    workflowTemplate,
+    isLoading: useState(InitialValues.isLoading)[0],
+    setIsLoading: useState(InitialValues.isLoading)[1],
+    workflowTemplate: memoizedWorkflowTemplate,
     setWorkFlowTemplate,
   };
 

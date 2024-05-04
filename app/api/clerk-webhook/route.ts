@@ -28,6 +28,7 @@ export async function POST(req: Request) {
       case "user.updated": {
         const { first_name, image_url, id, email_addresses } = data;
         const email = email_addresses[0].email_address;
+
         await db.user.update({
           where: { clerkId: id },
           data: {

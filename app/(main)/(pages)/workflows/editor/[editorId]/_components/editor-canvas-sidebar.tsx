@@ -33,7 +33,7 @@ import {
   onDragStart,
 } from "@/lib/editor-utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 type Props = {
   nodes: EditorNodeType[];
@@ -52,7 +52,13 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
     if (state) {
       onConnections(nodeConnection, state, googleFile);
     }
-  }, [googleFile, nodeConnection, state]);
+
+    // I am not putting nodeConnection object as a dep cause each tiem
+    // onConnection change value in change nodeConnection and this
+    // useEffect getting stuck at infinite loop
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   useEffect(() => {
     if (nodeConnection.slackNode.slackAccessToken) {
@@ -61,9 +67,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
         setSlackChannels
       );
     }
-  }, [nodeConnection]);
-
-  console.log(nodeConnection.slackNode);
+  }, [nodeConnection.slackNode.slackAccessToken, setSlackChannels]);
 
   return (
     <aside className="@container">
@@ -133,10 +137,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                     Options
                   </AccordionTrigger>
                   <AccordionContent>
-                    <RenderOutputAccordion
-                      state={state}
-                      connection={nodeConnection}
-                    />
+                    <RenderOutputAccordion />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

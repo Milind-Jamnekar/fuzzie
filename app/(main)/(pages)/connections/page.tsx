@@ -101,7 +101,6 @@ const ConnectionsPage = async (props: Props) => {
   };
 
   const connections = await onUserConnections();
-  console.log(connections);
 
   return (
     <div className="flex flex-col gap-4">
