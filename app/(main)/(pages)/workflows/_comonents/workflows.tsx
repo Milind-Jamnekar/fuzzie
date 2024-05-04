@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { onGetWorkflows } from "../_actions/workflow-connections";
 import { WorkflowCard } from "./workflow-card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export async function Workflows() {
   const workflows = await onGetWorkflows();
@@ -44,6 +46,28 @@ function EmptyWorkflowComp() {
           </Button>
         </CustomDialog>
       </div>
+    </div>
+  );
+}
+
+export function WorkflowSkeleton() {
+  let nums = [1, 2, 3];
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {nums.map((num) => (
+        <Card key={num} className="flex items-center justify-between">
+          <CardHeader className="flex flex-col">
+            <div className="flex gap-2">
+              <Skeleton className="h-[30px] w-[30px] rounded-full" />
+              <Skeleton className="h-[30px] w-[30px] rounded-full" />
+              <Skeleton className="h-[30px] w-[30px] rounded-full" />
+            </div>
+            <div className="flex flex-col gap-3"></div>
+            <Skeleton className="h-[10px] w-full rounded-full" />
+            <Skeleton className="h-[10px] w-3/5 rounded-full" />
+          </CardHeader>
+        </Card>
+      ))}
     </div>
   );
 }

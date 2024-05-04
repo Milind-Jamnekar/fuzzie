@@ -3,8 +3,9 @@ import { CustomDialog } from "@/components/modals/custom-dialog";
 import { MainPageTitle } from "@/components/reusable";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Workflows } from "./_comonents/workflows";
+import { WorkflowSkeleton, Workflows } from "./_comonents/workflows";
 import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
 
 function WorkflowsPage() {
   return (
@@ -29,7 +30,9 @@ function WorkflowsPage() {
           <p className="text-white/50">Manage your workflow list</p>
         </div>
         <Separator />
-        <Workflows />
+        <Suspense fallback={<WorkflowSkeleton />}>
+          <Workflows />
+        </Suspense>
       </section>
     </div>
   );
