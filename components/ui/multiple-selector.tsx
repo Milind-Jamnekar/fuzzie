@@ -210,7 +210,7 @@ const MultipleSelector = React.forwardRef<
         setSelected(newOptions);
         onChange?.(newOptions);
       },
-      [selected]
+      [onChange, selected]
     );
 
     const handleKeyDown = React.useCallback(
@@ -269,7 +269,7 @@ const MultipleSelector = React.forwardRef<
       };
 
       void exec();
-    }, [debouncedSearchTerm, open]);
+    }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
     const CreatableItem = () => {
       if (!creatable) return undefined;
@@ -435,7 +435,7 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative mt-2">
           {open && (
-            <CommandList className="z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
+            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (

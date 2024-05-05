@@ -19,32 +19,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckIcon, ChevronsUpDown } from "lucide-react";
+import { CheckIcon, ChevronsUpDown, Cigarette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
 
 const RenderConnectionAccordion = ({
   connection,
@@ -91,23 +68,22 @@ const RenderConnectionAccordion = ({
       {slackSpecial && isConnected && (
         <div className="p-6">
           {slackChannels?.length ? (
-            // <>
-            //   <div className="mb-4 ml-1">
-            //     Select the slack channels to send notification and messages:
-            //   </div>
-            //   <MultipleSelector
-            //     value={selectedSlackChannels}
-            //     onChange={setSelectedSlackChannels}
-            //     defaultOptions={slackChannels}
-            //     placeholder="Select channels"
-            //     emptyIndicator={
-            //       <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-            //         no results found.
-            //       </p>
-            //     }
-            //   />
-            // </>
-            <div>nothing </div>
+            <>
+              <div className="mb-4 ml-1">
+                Select the slack channels to send notification and messages:
+              </div>
+              <MultipleSelector
+                value={selectedSlackChannels}
+                onChange={setSelectedSlackChannels}
+                defaultOptions={slackChannels}
+                placeholder="Select channels"
+                emptyIndicator={
+                  <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                    no results found.
+                  </p>
+                }
+              />
+            </>
           ) : (
             "No Slack channels found. Please add your Slack bot to your Slack channel"
           )}
