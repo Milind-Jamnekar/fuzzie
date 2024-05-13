@@ -3,6 +3,14 @@
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
+/**
+ * Saving nodes,edges and flow to the db
+ * @param flowId
+ * @param nodes
+ * @param edges
+ * @param flowPath
+ * @returns
+ */
 export const onCreateNodesEdges = async (
   flowId: string,
   nodes: string,
@@ -28,6 +36,9 @@ export const onCreateNodesEdges = async (
   }
 };
 
+/**
+ * Of course this set pubish to true
+ */
 export const onFlowPublish = async (workflowId: string, state: boolean) => {
   try {
     const published = await db.workflows.update({

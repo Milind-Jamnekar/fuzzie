@@ -1,27 +1,11 @@
 "use client";
-import React from "react";
-import ConnectionCard from "main/connections/_components/connections-card";
-import { AccordionContent } from "@/components/ui/accordion";
 import MultipleSelector from "@/components/ui/multiple-selector";
+import { useFuzzieStore } from "@/lib/store";
 import { Connection } from "@/lib/types";
 import { useNodeConnections } from "@/providers/connections-provider";
 import { EditorState } from "@/providers/editor-provider";
-import { useFuzzieStore } from "@/lib/store";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { CheckIcon, ChevronsUpDown, Cigarette } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import ConnectionCard from "main/connections/_components/connections-card";
+import React from "react";
 
 const RenderConnectionAccordion = ({
   connection,
@@ -43,9 +27,6 @@ const RenderConnectionAccordion = ({
   const { nodeConnection } = useNodeConnections();
   const { slackChannels, selectedSlackChannels, setSelectedSlackChannels } =
     useFuzzieStore();
-
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
   const connectionData = (nodeConnection as any)[connectionKey];
 

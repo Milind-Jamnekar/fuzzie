@@ -50,6 +50,7 @@
     "reactflow": "^11.11.1",
     "sharp": "^0.33.3",
     "sonner": "^1.4.41",
+    "stripe": "^15.5.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.0",

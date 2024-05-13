@@ -1,9 +1,9 @@
+import { Badge } from "@/components/ui/badge";
 import { EditorCanvasCardType } from "@/lib/types";
 import { useEditor } from "@/providers/editor-provider";
-import React, { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { Position, useNodeId } from "reactflow";
 import CustomHandle from "./custom-handle";
-import { Badge } from "@/components/ui/badge";
 
 import {
   Card,
@@ -73,4 +73,4 @@ const EditorCanvasCardSingle = ({ data }: { data: EditorCanvasCardType }) => {
   );
 };
 
-export default EditorCanvasCardSingle;
+export default memo(EditorCanvasCardSingle);

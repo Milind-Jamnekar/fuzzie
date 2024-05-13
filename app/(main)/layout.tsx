@@ -4,6 +4,7 @@
 import InfoBar from "@/components/infobar";
 import Sidebar from "@/components/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { BillingProvider } from "@/providers/billing-provider";
 import { ReactNode } from "react";
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -12,8 +13,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <Toaster closeButton position="top-center" />
       <Sidebar />
       <div className="w-full">
-        <InfoBar />
-        {children}
+        <BillingProvider>
+          <InfoBar />
+          {children}
+        </BillingProvider>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { onCreateWorkflow } from "@/app/(main)/(pages)/workflows/_actions/workflow-connections";
+import { onCreateWorkflow } from "main/workflows/_actions/workflow-connections";
 import { toast } from "sonner";
 
 function WorkflowForm() {
@@ -35,8 +35,6 @@ function WorkflowForm() {
       success: (data) => `${data.message}`,
       error: "Error",
     });
-
-    router.refresh();
   };
 
   return (

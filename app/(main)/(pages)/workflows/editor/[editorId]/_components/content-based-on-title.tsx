@@ -11,10 +11,12 @@ import { onContentChange } from "@/lib/editor-utils";
 import { nodeMapper } from "@/lib/types";
 import { useNodeConnections } from "@/providers/connections-provider";
 import { useEditor } from "@/providers/editor-provider";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ActionButton from "./action-button";
 import GoogleDriveFiles from "./google-drive-files";
 import GoogleFileDetails from "./google-file-details";
+import axios from "axios";
+import { toast } from "sonner";
 
 export interface Option {
   value: string;
@@ -47,21 +49,21 @@ const ContentBasedOnTitle = ({
   const { selectedNode } = state.editor;
   const title = selectedNode.data.title;
 
-  // useEffect(() => {
-  //   const reqGoogle = async () => {
-  //     const response: { data: { message: { files: any } } } = await axios.get(
-  //       '/api/drive'
-  //     )
-  //     if (response) {
-  //       console.log(response.data.message.files[0])
-  //       toast.message("Fetched File")
-  //       setFile(response.data.message.files[0])
-  //     } else {
-  //       toast.error('Something went wrong')
-  //     }
-  //   }
-  //   reqGoogle()
-  // }, [])
+  useEffect(() => {
+    const reqGoogle = async () => {
+      const response: { data: { message: { files: any } } } = await axios.get(
+        "/api/drive"
+      );
+      if (response) {
+        console.log(response.data.message.files);
+        toast.message("Fetched File");
+        setFile(response.data.message.files[0]);
+      } else {
+        toast.error("Something went wrong");
+      }
+    };
+    reqGoogle();
+  }, []);
 
   const nodeConnectionType: any = useMemo(
     // @ts-ignore

@@ -8,6 +8,7 @@ import {
   onCreateNodesEdges,
   onFlowPublish,
 } from "../_actions/workflow-connections";
+import { useEdges } from "reactflow";
 
 type Props = {
   children: ReactNode;
@@ -46,6 +47,7 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   const onAutomateFlow = useCallback(() => {
     const flows: any = [];
     const connectedEdges = edges.map((edge) => edge.target);
+
     connectedEdges.map((target) => {
       nodes.map((node) => {
         if (node.id === target) {
@@ -60,6 +62,7 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   useEffect(() => {
     onAutomateFlow();
   }, [onAutomateFlow]);
+
 
   return (
     <div className="flex flex-col ">

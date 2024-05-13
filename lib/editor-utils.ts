@@ -1,16 +1,16 @@
+import { Option } from "@/components/ui/multiple-selector";
 import { ConnectionProviderProps } from "@/providers/connections-provider";
-import { EditorCanvasCardType } from "./types";
 import { EditorState } from "@/providers/editor-provider";
-import { getDiscordConnectionUrl } from "@/app/(main)/(pages)/connections/_actions/discord-connection";
+import { getDiscordConnectionUrl } from "main/connections/_actions/discord-connection";
 import {
   getNotionConnection,
   getNotionDatabase,
-} from "@/app/(main)/(pages)/connections/_actions/notion-connection";
+} from "main/connections/_actions/notion-connection";
 import {
   getSlackConnection,
   listBotChannels,
-} from "@/app/(main)/(pages)/connections/_actions/slack-connection";
-import { Option } from "@/components/ui/multiple-selector";
+} from "main/connections/_actions/slack-connection";
+import { EditorCanvasCardType } from "./types";
 
 export const onDragStart = (
   event: any,

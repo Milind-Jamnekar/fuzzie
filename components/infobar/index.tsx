@@ -16,28 +16,30 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
+import { useBilling } from "@/providers/billing-provider";
+import { userCurrentTierAndCredits } from "@/app/(main)/(pages)/billing/_actions";
+import { useCallback, useEffect } from "react";
 
 // import { UserButton } from "@clerk/nextjs";
 // import { useBilling } from "@/providers/billing-provider";
-// import { onPaymentDetails } from "@/app/(main)/(pages)/billing/_actions/payment-connecetions";
+// import { onPaymentDetails } from "main/billing/_actions/payment-connecetions";
 
 const InfoBar = () => {
   const pathName = usePathname();
-  // const { user } = useUser();
 
-  //   const { credits, tier, setCredits, setTier } = useBilling();
+  const { tier, credits, setCredits, setTier } = useBilling();
 
-  //   const onGetPayment = async () => {
-  //     const response = await onPaymentDetails();
-  //     if (response) {
-  //       setTier(response.tier!);
-  //       setCredits(response.credits!);
-  //     }
-  //   };
+  const onGetPayment = useCallback(async () => {
+    const response = await userCurrentTierAndCredits();
+    if (response) {
+      setTier(response.tier!);
+      setCredits(response.credits!);
+    }
+  }, [setCredits, setTier]);
 
-  //   useEffect(() => {
-  //     onGetPayment();
-  //   }, []);
+  useEffect(() => {
+    onGetPayment();
+  }, [onGetPayment]);
 
   return (
     <div className="flex flex-row justify-between md:justify-end gap-6 items-center px-4 py-4 w-full dark:bg-black">
@@ -78,13 +80,13 @@ const InfoBar = () => {
       </div>
       <span className="flex items-center gap-2 font-bold">
         <p className="text-sm font-light text-gray-300">Credits</p>
-        {/* {tier == "Unlimited" ? (
+        {tier == "Unlimited" ? (
           <span>Unlimited</span>
         ) : (
           <span>
             {credits}/{tier == "Free" ? "10" : tier == "Pro" && "100"}
           </span>
-        )} */}
+        )}
       </span>
       <div className="flex items-center rounded-full bg-muted px-4">
         <Search />

@@ -6,13 +6,18 @@ import { LampComponent } from "@/components/global/lamp";
 import { Navbar } from "@/components/global/Navbar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { clients, products } from "@/lib/constant";
+import { currentUser } from "@clerk/nextjs";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
   //WIP: remove fault IMAge for home page
-  // const user = user
+  const user = await currentUser();
+  if (user) {
+    redirect("/dashboard");
+  }
   return (
     <main className="flex items-center justify-center flex-col">
       <Navbar />

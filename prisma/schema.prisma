@@ -17,13 +17,14 @@ model User {
   name         String?
   email        String  @unique
   profileImage String?
-  tier         String? @default("Free")
-  credits      String? @default("10")
+  tier         String  @default("Free")
+  credits      Int     @default(10)
 
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   localGoogleId    String?  @unique
   googleResourceId String?  @unique
+  pageToken        String?  @unique
 
   LocalGoogleCredential LocalGoogleCredential?
   DiscordWebhook        DiscordWebhook[]

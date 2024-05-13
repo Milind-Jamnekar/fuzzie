@@ -1,7 +1,14 @@
 "use client";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
 import { EditorCanvasCardType, EditorNodeType } from "@/lib/types";
 import { useEditor } from "@/providers/editor-provider";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ReactFlow, {
   Background,
   Connection,
@@ -11,29 +18,17 @@ import ReactFlow, {
   MiniMap,
   NodeChange,
   ReactFlowInstance,
-  applyNodeChanges,
-  applyEdgeChanges,
   addEdge,
-  useNodesState,
-  useEdgesState,
+  applyEdgeChanges,
+  applyNodeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import EditorCanvasCardSingle from "./editor-canvas-card-single";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import { toast } from "sonner";
-import { useParams, usePathname } from "next/navigation";
 import { v4 } from "uuid";
-import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
-import FlowInstance from "./flow-instance";
+import { onGetNodesEdges } from "../../../_actions/workflow-connections";
+import EditorCanvasCardSingle from "./editor-canvas-card-single";
 import EditorCanvasSidebar from "./editor-canvas-sidebar";
-import {
-  onGetNodesEdges,
-  onGetWorkflows,
-} from "../../../_actions/workflow-connections";
+import FlowInstance from "./flow-instance";
 
 type Props = {};
 
@@ -157,6 +152,7 @@ const EditorCanvas = (props: Props) => {
       setEdges(JSON.parse(response.edges!));
       setNodes(JSON.parse(response.nodes!));
       setIsWorkFlowLoading(false);
+      return;
     }
     setIsWorkFlowLoading(false);
   }, [editorId]);

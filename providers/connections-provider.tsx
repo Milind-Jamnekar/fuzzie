@@ -23,6 +23,7 @@ export type ConnectionProviderProps = {
     accessToken: string;
     databaseId: string;
     workspaceName: string;
+    // #notionSchema
     content: "";
   };
   workflowTemplate: {
@@ -65,6 +66,7 @@ const InitialValues: ConnectionProviderProps = {
     guildName: "",
   },
   googleNode: [],
+  //WIP: I have to customized content schema here and type #notionSchema
   notionNode: {
     accessToken: "",
     databaseId: "",

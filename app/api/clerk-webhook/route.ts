@@ -20,6 +20,8 @@ export async function POST(req: Request) {
           },
         });
 
+        console.log("done saving ");
+
         return new NextResponse("User created in database successfully", {
           status: 200,
         });

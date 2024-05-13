@@ -148,7 +148,10 @@ export const onCreateWorkflow = async (name: string, description: string) => {
         },
       });
 
-      if (workflow) return { message: "workflow created" };
+      if (workflow) {
+        revalidatePath("/workflows");
+        return { message: "workflow created" };
+      }
       return { message: "Oops! try again" };
     } catch (error) {
       console.error(error);

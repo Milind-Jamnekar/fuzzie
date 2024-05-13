@@ -72,10 +72,14 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
   return (
     <aside className="@container">
       <ScrollArea className="rounded-xl h-screen border m-4 p-4 pb-44">
-        <Tabs defaultValue="actions">
-          <TabsList className="grid w-full grid-cols-2 sticky top-0 ">
-            <TabsTrigger value="actions">Actions</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+        <Tabs defaultValue="actions" className="rounded-lg">
+          <TabsList className="grid w-full grid-cols-2 sticky top-0 rounded-xl">
+            <TabsTrigger value="actions" className="rounded-lg">
+              Actions
+            </TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-lg">
+              Settings
+            </TabsTrigger>
           </TabsList>
           {/* Actions tab content  */}
           <TabsContent

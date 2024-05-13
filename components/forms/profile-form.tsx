@@ -19,13 +19,14 @@ import { EditUserProfileSchema } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { User } from "@prisma/client";
 import { LoaderIcon } from "lucide-react";
+import { toast } from "sonner";
 
 function ProfileForm({
   user,
   onUpload,
 }: {
   user: User;
-  onUpload: (values: { name: string; email: string }) => Promise<void>;
+  onUpload: (name: string) => Promise<void>;
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof EditUserProfileSchema>>({
@@ -39,7 +40,12 @@ function ProfileForm({
 
   async function onSubmit(values: z.infer<typeof EditUserProfileSchema>) {
     setIsLoading(true);
-    await onUpload(values);
+    const profilePromise = onUpload(values.name);
+    toast.promise(profilePromise, {
+      success: "Name updated successfully",
+      error: "Error on updating name",
+      loading: "Updating name....",
+    });
     setIsLoading(false);
   }
 
@@ -61,14 +67,18 @@ function ProfileForm({
           )}
         />
         <FormField
-          disabled={isLoading}
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-lg">Email</FormLabel>
               <FormControl>
-                <Input placeholder="example@fuzzie.com" {...field} />
+                <Input
+                  {...field}
+                  disabled={true}
+                  placeholder="Email"
+                  type="email"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
