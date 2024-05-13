@@ -6,41 +6,9 @@ import { currentUser, useAuth } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
 import { Suspense } from "react";
 import { Loader } from "lucide-react";
+import { Profile, ProfileSkeleton } from "./_components/profile";
 
 async function SettingsPage() {
-  const authuser = await currentUser();
-  if (!authuser) return null;
-
-  const user = await db.user.findUnique({ where: { clerkId: authuser.id } });
-
-  if (!user) return null;
-
-  const removeProfileImage = async () => {
-    "use server";
-    const res = await db.user.update({
-      where: { clerkId: authuser.id },
-      data: { profileImage: "" },
-    });
-    return res;
-  };
-
-  const uploadProfileImage = async (image: string) => {
-    "use server";
-    const res = await db.user.update({
-      where: { clerkId: authuser.id },
-      data: { profileImage: image },
-    });
-    return res;
-  };
-
-  const onUserFormUpload = async (values: { name: string; email: string }) => {
-    "use server";
-    await db.user.update({
-      where: { clerkId: authuser.id },
-      data: { name: values.name, email: values.email },
-    });
-  };
-
   return (
     <div className="flex flex-col gap-2">
       <MainPageTitle title="Settings" />
@@ -51,14 +19,9 @@ async function SettingsPage() {
         </div>
         <Separator />
         <div className="grid gap-0 grid-cols-1 md:grid-cols-2 md:gap-6">
-          <Suspense fallback={<Loader className="animate-spin" />}>
-            <ProfileImage
-              onDelete={removeProfileImage}
-              userImage={user.profileImage || ""}
-              onUpload={uploadProfileImage}
-            />
+          <Suspense fallback={<ProfileSkeleton />}>
+            <Profile />
           </Suspense>
-          <ProfileForm onUpload={onUserFormUpload} user={user} />
         </div>
       </div>
     </div>

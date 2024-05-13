@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ConnectionCard from "@/app/(main)/(pages)/connections/_components/connections-card";
+import ConnectionCard from "main/connections/_components/connections-card";
 import { AccordionContent } from "@/components/ui/accordion";
 import MultipleSelector from "@/components/ui/multiple-selector";
 import { Connection } from "@/lib/types";

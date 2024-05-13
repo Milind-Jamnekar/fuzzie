@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "main/*": ["./app/(main)/(pages)/*"]
     },
     "types": ["@uploadcare/blocks/types/jsx"]
   },
