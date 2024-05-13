@@ -47,9 +47,15 @@ export async function POST(req: Request) {
     }
   } catch (error) {
     console.log("error in updating user in database successfully");
-    return new NextResponse("error in updating user in database successfully", {
-      status: 500,
-    });
+    return NextResponse.json(
+      {
+        message: "error in updating user in database successfully",
+        error: error,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
 
