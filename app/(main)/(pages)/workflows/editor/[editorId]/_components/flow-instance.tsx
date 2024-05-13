@@ -63,7 +63,6 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
     onAutomateFlow();
   }, [onAutomateFlow]);
 
-
   return (
     <div className="flex flex-col ">
       <div className="flex gap-3 p-4">
