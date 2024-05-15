@@ -44,12 +44,24 @@ export async function POST(req: Request) {
           status: 200,
         });
       }
+
+      case "user.deleted": {
+        const { deleted, id } = data;
+
+        await db.user.delete({
+          where: { clerkId: id },
+        });
+
+        return new NextResponse("User deleted in db successfully", {
+          status: 200,
+        });
+      }
     }
   } catch (error) {
-    console.log("error in updating user in database successfully");
+    console.log("error in updating user in database");
     return NextResponse.json(
       {
-        message: "error in updating user in database successfully",
+        message: "error in updating user in database",
         error: error,
       },
       {
