@@ -25,9 +25,10 @@ export async function POST(req: NextRequest) {
     ],
     billing_address_collection: "required",
     mode: "subscription",
-    success_url:
-      "http://localhost:3000/billing?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: "http://localhost:3000/billing",
+    success_url: `${
+      process.env.NEXT_PUBLIC_URL || "http://localhost:3000"
+    }/billing?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_URL || "http://localhost:3000"}`,
   });
 
   return NextResponse.json(session.url);
