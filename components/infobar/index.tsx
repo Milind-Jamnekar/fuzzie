@@ -42,7 +42,7 @@ const InfoBar = () => {
   }, [onGetPayment]);
 
   return (
-    <div className="flex flex-row justify-between md:justify-end gap-6 items-center px-4 py-4 w-full dark:bg-black">
+    <div className="flex flex-row justify-between md:justify-end gap-3 items-center px-4 py-4 w-full dark:bg-black">
       <div className="md:hidden">
         <Sheet>
           <SheetTrigger asChild>
@@ -96,19 +96,23 @@ const InfoBar = () => {
         />
       </div>
       <TooltipProvider>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger>
-            <Headphones />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost">
+              <Headphones aria-hidden="true" />
+              <span className="sr-only">Customer support</span>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>Contact Support</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip delayDuration={0}>
-          <TooltipTrigger>
-            <Book />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost">
+              <Book aria-hidden="true" />
+              <span className="sr-only">Documantation</span>
+            </Button>
           </TooltipTrigger>
           <TooltipContent>
             <p>Guide</p>

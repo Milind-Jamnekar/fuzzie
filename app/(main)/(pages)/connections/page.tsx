@@ -1,15 +1,8 @@
-import { MainPageTitle } from "@/components/reusable";
-import { CONNECTIONS } from "@/lib/constant";
-import ConnectionCard, {
-  ConnectionSkeleton,
-} from "./_components/connections-card";
-import { currentUser } from "@clerk/nextjs/server";
-import { onDiscordConnect } from "./_actions/discord-connection";
-import { onNotionConnect } from "./_actions/notion-connection";
-import { onSlackConnect } from "./_actions/slack-connection";
-import { getUserData } from "./_actions/get-user";
 import { Suspense } from "react";
+
+import { MainPageTitle } from "@/components/reusable";
 import Connection from "./_components/connections";
+import { ConnectionSkeleton } from "./_components/connections-card";
 
 type Props = {
   searchParams?: { [key: string]: string | undefined };

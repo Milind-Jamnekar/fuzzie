@@ -18,7 +18,8 @@ function WorkflowsPage() {
             formElement={<WorkflowForm />}
           >
             <Button size="icon">
-              <Plus className="h-5 w-5" />
+              <Plus className="h-5 w-5" aria-hidden="true" />
+              <span className="sr-only">Create new workflow</span>
             </Button>
           </CustomDialog>
         </div>

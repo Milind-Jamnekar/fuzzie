@@ -20,6 +20,7 @@ const CreditTracker = () => {
                 : credits
             }
             className="w-full"
+            aria-label={`${credits} creadits remaining`}
           />
           <div className="flex justify-end">
             <p>

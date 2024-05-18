@@ -72,6 +72,7 @@ export function WorkflowCard({
               error: (data) => data || "Failed to publishing workflow",
             });
           }}
+          aria-label="Publish workflow switch"
           defaultChecked={publish!}
         />
       </div>
