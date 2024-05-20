@@ -1,0 +1,25 @@
+{
+  "background_color": "#000000",
+  "description": "Automate Your Work With Fuzzie using discord, Slack, notion and drive 🚀",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Fuzzie",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Fuzzie",
+  "start_url": "/",
+  "theme_color": "#4816ff",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "id": "1",
+  "lang": "en"
+}
