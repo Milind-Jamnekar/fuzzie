@@ -116,5 +116,5 @@ export async function GET() {
 
   const list = await drive.files.list();
 
-  return list.data;
+  return Response.json(list.data);
 }
