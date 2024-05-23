@@ -57,12 +57,7 @@ const GoogleDriveFiles = () => {
   }, []);
 
   const onRemove = useCallback(async () => {
-    const listener = await getGoogleListener();
-    if (listener?.googleResourceId !== null) {
-      setIsListening(true);
-      return true;
-    }
-    return false;
+    const res = await axios.delete("/api/drive");
   }, []);
 
   useEffect(() => {
@@ -80,7 +75,7 @@ const GoogleDriveFiles = () => {
         <Card className="py-3">
           <CardContainer>
             <CardDescription>Listening...</CardDescription>
-            <Button></Button>
+            <Button onClick={onRemove}>Remove Listener</Button>
           </CardContainer>
         </Card>
       ) : (

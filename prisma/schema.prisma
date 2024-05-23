@@ -25,6 +25,7 @@ model User {
   localGoogleId    String?  @unique
   googleResourceId String?  @unique
   pageToken        String?  @unique
+  fileId           String?
 
   LocalGoogleCredential LocalGoogleCredential?
   DiscordWebhook        DiscordWebhook[]

@@ -13,7 +13,7 @@ export async function DELETE() {
 
   const { userId } = auth();
   if (!userId) {
-    return NextResponse.json({ message: "User not found" });
+    return NextResponse.json({ message: "User not found" }, { status: 400 });
   }
 
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
@@ -38,10 +38,11 @@ export async function DELETE() {
       },
       select: {
         pageToken: true,
+        fileId: true,
       },
     });
 
-    if (channelStored?.pageToken) {
+    if (!channelStored?.pageToken && !channelStored?.fileId) {
       return Response.json(
         {
           message: "No pagetoken found in user db",
@@ -52,7 +53,12 @@ export async function DELETE() {
       );
     }
 
-    drive.channels.stop();
+    await drive.channels.stop({
+      requestBody: {
+        id: channelStored?.fileId,
+        resourceId: channelStored?.pageToken,
+      },
+    });
 
     const response = await drive.files.list();
 
@@ -115,6 +121,5 @@ export async function GET() {
   });
 
   const list = await drive.files.list();
-
-  return Response.json(list.data);
+  return Response.json(list.data.files);
 }
