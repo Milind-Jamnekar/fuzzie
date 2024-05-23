@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { auth, clerkClient } from "@clerk/nextjs";
 import { google } from "googleapis";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
 const url =
@@ -9,7 +9,18 @@ const url =
     ? process.env.NGROK_URI
     : "https://fuzzie.milindjamnekar.dev";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const fileId = searchParams.get("fileId");
+  if (!fileId) {
+    return NextResponse.json(
+      {
+        message: "Please provide fileId from your drive files",
+      },
+      { status: 500 }
+    );
+  }
+
   const oauth2Client = new google.auth.OAuth2({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -48,8 +59,9 @@ export async function GET() {
   //   supportsAllDrives: true,
   //   supportsTeamDrives: true,
   // });
-  const listener = await drive.changes.watch({
-    pageToken: startPageToken,
+
+  const listener = await drive.files.watch({
+    fileId,
     supportsAllDrives: true,
     supportsTeamDrives: true,
     requestBody: {
@@ -67,7 +79,8 @@ export async function GET() {
         clerkId: userId,
       },
       data: {
-        pageToken: startPageToken,
+        fileId,
+        pageToken: channelId,
         googleResourceId: listener.data.resourceId,
       },
     });
