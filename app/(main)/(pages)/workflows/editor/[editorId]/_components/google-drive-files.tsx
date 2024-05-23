@@ -37,8 +37,11 @@ const GoogleDriveFiles = () => {
   }, []);
 
   const reqGoogle = useCallback(async () => {
+    if (!value) {
+      return toast.error("Please select file");
+    }
     setLoading(true);
-    const response = await axios.get("/api/drive-activity");
+    const response = await axios.get(`/api/drive-activity?fileId=${value}`);
     if (response) {
       toast.message(response.data);
       setLoading(false);
@@ -79,7 +82,7 @@ const GoogleDriveFiles = () => {
           </CardContainer>
         </Card>
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           <AutoComplete
             options={files}
             emptyMessage="No resulsts."
@@ -100,7 +103,7 @@ const GoogleDriveFiles = () => {
               "Create Listener"
             )}
           </Button>
-        </>
+        </div>
       )}
     </div>
   );
