@@ -38,10 +38,10 @@ export async function POST(req: NextRequest) {
       });
       if (workflow) {
         workflow.map(async (flow) => {
-          const flowPath = JSON.parse(flow.flowPath!);
-          let current = 0;
-          while (current <= flowPath.length) {
-            if (flowPath[current] == "Discord") {
+          const flowPath = JSON.parse(flow.flowPath!) as any;
+
+          flowPath.map(async (flow: any) => {
+            if (flow == "Discord") {
               const discordMessage = await db.discordWebhook.findFirst({
                 where: {
                   userId: flow.userId,
@@ -50,18 +50,16 @@ export async function POST(req: NextRequest) {
                   url: true,
                 },
               });
-              console.log("discord template ", flow.discordTemplate);
 
               if (discordMessage?.url) {
                 await postContentToWebHook(
                   flow.discordTemplate!,
                   discordMessage.url
                 );
-                flowPath.splice(flowPath[current], 1);
               }
             }
-            if (flowPath[current] == "Slack") {
-              const channels = flow.slackChannels.map((channel) => {
+            if (flow == "Slack") {
+              const channels = flow.slackChannels.map((channel: string) => {
                 return {
                   label: "",
                   value: channel,
@@ -72,17 +70,15 @@ export async function POST(req: NextRequest) {
                 channels,
                 flow.slackTemplate!
               );
-              flowPath.splice(flowPath[current], 1);
             }
-            if (flowPath[current] == "Notion") {
+            if (flow == "Notion") {
               await onCreateNewPageInDatabase(
                 flow.notionDbId!,
                 flow.notionAccessToken!,
                 JSON.parse(flow.notionTemplate!)
               );
-              flowPath.splice(flowPath[current], 1);
             }
-            if (flowPath[current] == "Wait") {
+            if (flow == "Wait") {
               const res = await axios.put(
                 "https://api.cron-job.org/jobs",
                 {
@@ -108,7 +104,6 @@ export async function POST(req: NextRequest) {
                 }
               );
               if (res) {
-                flowPath.splice(flowPath[current], 1);
                 const cronPath = await db.workflows.update({
                   where: {
                     id: flow.id,
@@ -117,12 +112,10 @@ export async function POST(req: NextRequest) {
                     cronPath: JSON.stringify(flowPath),
                   },
                 });
-                if (cronPath) break;
+                if (cronPath) return;
               }
-              break;
             }
-            current++;
-          }
+          });
 
           await db.user.update({
             where: {
