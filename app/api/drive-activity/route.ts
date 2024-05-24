@@ -53,6 +53,7 @@ export async function GET() {
     supportsAllDrives: true,
     supportsTeamDrives: true,
     requestBody: {
+      expiration: 604800,
       id: channelId,
       type: "web_hook",
       address: `${url}/api/drive-activity/notification`,
