@@ -85,6 +85,8 @@ const postMessageInSlackChannel = async (
   content: string
 ): Promise<void> => {
   try {
+    console.log("slack message to be sent is this ", content);
+
     await axios.post(
       "https://slack.com/api/chat.postMessage",
       { channel: slackChannel, text: content },

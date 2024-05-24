@@ -51,7 +51,10 @@ export async function POST(req: NextRequest) {
                 },
               });
               if (discordMessage) {
-                await postContentToWebHook("test", discordMessage.url);
+                await postContentToWebHook(
+                  flow.discordTemplate!,
+                  discordMessage.url
+                );
                 flowPath.splice(flowPath[current], 1);
               }
             }
