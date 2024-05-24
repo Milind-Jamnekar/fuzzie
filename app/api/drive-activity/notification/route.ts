@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         workflow.map(async (flow) => {
           const flowPath = JSON.parse(flow.flowPath!);
           let current = 0;
-          while (current < flowPath.length) {
+          while (current <= flowPath.length) {
             if (flowPath[current] == "Discord") {
               const discordMessage = await db.discordWebhook.findFirst({
                 where: {
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
               });
               console.log("discord template ", flow.discordTemplate);
 
-              if (discordMessage) {
+              if (discordMessage?.url) {
                 await postContentToWebHook(
                   flow.discordTemplate!,
                   discordMessage.url
@@ -82,7 +82,6 @@ export async function POST(req: NextRequest) {
               );
               flowPath.splice(flowPath[current], 1);
             }
-
             if (flowPath[current] == "Wait") {
               const res = await axios.put(
                 "https://api.cron-job.org/jobs",
