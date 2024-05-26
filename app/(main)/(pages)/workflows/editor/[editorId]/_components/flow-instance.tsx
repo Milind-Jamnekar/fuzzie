@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { EditorNodeType } from "@/lib/types";
 import { useNodeConnections } from "@/providers/connections-provider";
 import { useParams } from "next/navigation";
 import { ReactNode, useCallback, useEffect, useState } from "react";
@@ -8,8 +9,6 @@ import {
   onCreateNodesEdges,
   onFlowPublish,
 } from "../_actions/workflow-connections";
-import { useEdges } from "reactflow";
-import { EditorNodeType } from "@/lib/types";
 
 type Props = {
   children: ReactNode;
@@ -53,6 +52,10 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
       error: "Error",
     });
   }, [editorId]);
+
+  useEffect(() => {
+    onAutomateFlow();
+  }, [onAutomateFlow]);
 
   return (
     <div className="flex flex-col ">
