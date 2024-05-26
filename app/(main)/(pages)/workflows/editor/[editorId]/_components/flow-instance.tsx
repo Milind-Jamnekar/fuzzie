@@ -9,11 +9,12 @@ import {
   onFlowPublish,
 } from "../_actions/workflow-connections";
 import { useEdges } from "reactflow";
+import { EditorNodeType } from "@/lib/types";
 
 type Props = {
   children: ReactNode;
   edges: any[];
-  nodes: any[];
+  nodes: EditorNodeType[];
 };
 
 const FlowInstance = ({ children, edges, nodes }: Props) => {
@@ -22,19 +23,9 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   const { nodeConnection } = useNodeConnections();
 
   const onAutomateFlow = useCallback(() => {
-    const flows: any = [];
-    const connectedEdges = edges.map((edge) => edge.target);
-
-    connectedEdges.map((target) => {
-      nodes.map((node) => {
-        if (node.id === target) {
-          flows.push(node.type);
-        }
-      });
-    });
-
-    return flows as string[];
-  }, [edges, nodes]);
+    let flows = nodes.map((node) => node.type as string);
+    return flows;
+  }, [nodes]);
 
   const onFlowAutomation = useCallback(() => {
     const flowPath = onAutomateFlow();

@@ -47,7 +47,7 @@ export type EditorCanvasCardType = {
 
 export type EditorNodeType = {
   id: string;
-  type: EditorCanvasCardType["type"];
+  type: EditorCanvasTypes;
   position: {
     x: number;
     y: number;
