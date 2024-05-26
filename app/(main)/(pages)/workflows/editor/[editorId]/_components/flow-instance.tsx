@@ -19,11 +19,12 @@ type Props = {
 
 const FlowInstance = ({ children, edges, nodes }: Props) => {
   const { editorId } = useParams<{ editorId: string }>();
-  const [isFlow, setIsFlow] = useState<string[]>([]);
+  const [flow, setFlow] = useState<string[]>([]);
   const { nodeConnection } = useNodeConnections();
 
   const onAutomateFlow = useCallback(() => {
     let flows = nodes.map((node) => node.type as string);
+    setFlow(flows);
     return flows;
   }, [nodes]);
 
@@ -56,10 +57,10 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
   return (
     <div className="flex flex-col ">
       <div className="flex gap-3 p-4">
-        <Button onClick={onFlowAutomation} disabled={isFlow.length < 1}>
+        <Button onClick={onFlowAutomation} disabled={flow.length < 1}>
           Save
         </Button>
-        <Button disabled={isFlow.length < 1} onClick={onPublishWorkflow}>
+        <Button disabled={flow.length < 1} onClick={onPublishWorkflow}>
           Publish
         </Button>
       </div>
