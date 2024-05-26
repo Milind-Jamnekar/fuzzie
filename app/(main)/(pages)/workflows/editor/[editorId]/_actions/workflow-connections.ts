@@ -15,7 +15,7 @@ export const onCreateNodesEdges = async (
   flowId: string,
   nodes: string,
   edges: string,
-  flowPath: string
+  flowPath: string[]
 ) => {
   try {
     const flow = await db.workflows.update({

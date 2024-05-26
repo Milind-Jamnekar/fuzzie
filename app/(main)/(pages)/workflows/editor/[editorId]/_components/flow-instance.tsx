@@ -18,31 +18,8 @@ type Props = {
 
 const FlowInstance = ({ children, edges, nodes }: Props) => {
   const { editorId } = useParams<{ editorId: string }>();
-  const [isFlow, setIsFlow] = useState([]);
+  const [isFlow, setIsFlow] = useState<string[]>([]);
   const { nodeConnection } = useNodeConnections();
-
-  const onFlowAutomation = useCallback(() => {
-    const flowPromise = onCreateNodesEdges(
-      editorId,
-      JSON.stringify(nodes),
-      JSON.stringify(edges),
-      JSON.stringify(isFlow)
-    );
-    toast.promise(flowPromise, {
-      loading: "Saving flow...",
-      success: (data) => `${data.message}`,
-      error: "Error",
-    });
-  }, [edges, editorId, isFlow, nodes]);
-
-  const onPublishWorkflow = useCallback(async () => {
-    const publishPromise = onFlowPublish(editorId, true);
-    toast.promise(publishPromise, {
-      loading: "Publishing flow...",
-      success: (data) => `${data}`,
-      error: "Error",
-    });
-  }, [editorId]);
 
   const onAutomateFlow = useCallback(() => {
     const flows: any = [];
@@ -56,12 +33,34 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
       });
     });
 
-    setIsFlow(flows);
+    return flows as string[];
   }, [edges, nodes]);
 
-  useEffect(() => {
-    onAutomateFlow();
-  }, [onAutomateFlow]);
+  const onFlowAutomation = useCallback(() => {
+    const flowPath = onAutomateFlow();
+
+    const flowPromise = onCreateNodesEdges(
+      editorId,
+      JSON.stringify(nodes),
+      JSON.stringify(edges),
+      flowPath
+    );
+
+    toast.promise(flowPromise, {
+      loading: "Saving flow...",
+      success: (data) => `${data.message}`,
+      error: "Error",
+    });
+  }, [edges, editorId, nodes, onAutomateFlow]);
+
+  const onPublishWorkflow = useCallback(async () => {
+    const publishPromise = onFlowPublish(editorId, true);
+    toast.promise(publishPromise, {
+      loading: "Publishing flow...",
+      success: (data) => `${data}`,
+      error: "Error",
+    });
+  }, [editorId]);
 
   return (
     <div className="flex flex-col ">
