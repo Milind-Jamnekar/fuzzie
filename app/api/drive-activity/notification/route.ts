@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       });
       if (workflow) {
         workflow.map(async (flow) => {
-          const flowPath = JSON.parse(flow.flowPath!);
+          const flowPath = flow.flowPath;
           let current = 0;
           while (current < flowPath.length) {
             if (flowPath[current] == "Discord") {
