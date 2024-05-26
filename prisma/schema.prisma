@@ -116,7 +116,7 @@ model Workflows {
   slackAccessToken  String?
   notionAccessToken String?
   notionDbId        String?
-  flowPath          String?
+  flowPath          String[]
   cronPath          String?
   publish           Boolean  @default(false)
   description       String
