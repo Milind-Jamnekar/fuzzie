@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
                   flow.discordTemplate!,
                   discordMessage.url
                 );
-                flowPath.splice(flowPath[current], 1);
+                flowPath.shift();
               }
             }
             if (flowPath[current] == "Slack") {
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
                 channels,
                 flow.slackTemplate!
               );
-              flowPath.splice(flowPath[current], 1);
+              flowPath.shift();
             }
             if (flowPath[current] == "Notion") {
               await onCreateNewPageInDatabase(
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
                 flow.notionAccessToken!,
                 JSON.parse(flow.notionTemplate!)
               );
-              flowPath.splice(flowPath[current], 1);
+              flowPath.shift();
             }
             if (flowPath[current] == "Wait") {
               const res = await axios.put(
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
                 }
               );
               if (res) {
-                flowPath.splice(flowPath[current], 1);
+                flowPath.shift();
                 const cronPath = await db.workflows.update({
                   where: {
                     id: flow.id,
