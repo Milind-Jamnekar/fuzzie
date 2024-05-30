@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Fuzzie",
+    url: new URL("https://fuzzie.milindjamnekar.dev"),
   },
 };
 
