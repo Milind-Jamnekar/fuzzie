@@ -8,9 +8,27 @@ import "./globals.css";
 
 const font = DM_Sans({ subsets: ["latin"] });
 
+const title = "Fuzzie | Automation tool for slack, discord, notion and drive";
+
+const description = "Try open source automation tool with simple and modern ui";
+
 export const metadata: Metadata = {
-  title: "Fuzzie.",
+  metadataBase: new URL("https://fuzzie.milindjamnekar.dev"),
+  title:
+    "Fuzzie | Open source automation tool for slack, discord, notion and drive",
   description: "Automate Your Work With Fuzzie.",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title,
+  //   description,
+  //   creator: "@MilindJamnekar",
+  //   images: ["/flow.png"],
+  // },
+  openGraph: {
+    type: "website",
+    siteName: "Fuzzie",
+  },
 };
 
 export default function RootLayout({
