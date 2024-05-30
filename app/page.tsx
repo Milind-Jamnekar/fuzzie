@@ -21,6 +21,7 @@ export default async function Home() {
   return (
     <main className="flex items-center justify-center flex-col">
       <Navbar />
+
       <section className="h-screen w-full bg-neutral-950 rounded-md !overflow-visible relative flex flex-col items-center  antialiased">
         <div className="absolute inset-0  h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_35%,#223_100%)]"></div>
         <div className="flex flex-col mt-[-100px] md:mt-[-50px]">
@@ -40,9 +41,19 @@ export default async function Home() {
                 </h1>
               </div>
             }
-          />
+          >
+            <Image
+              src={`/flow.png`}
+              alt="hero"
+              height={811}
+              width={1440}
+              className="mx-auto rounded-2xl object-cover h-full object-left-top"
+              draggable={false}
+            />
+          </ContainerScroll>
         </div>
       </section>
+
       <InfiniteMovingCards
         className="md:mt-[18rem] mt-[-100px]"
         items={clients}
