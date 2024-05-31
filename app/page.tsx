@@ -13,11 +13,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const user = await currentUser();
-  if (user) {
-    return redirect("/dashboard");
-  }
-
   return (
     <main className="flex items-center justify-center flex-col">
       <Navbar />
