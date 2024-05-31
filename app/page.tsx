@@ -9,6 +9,7 @@ import { clients, products } from "@/lib/constant";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import flow from "@/public/flow.png";
 
 export default async function Home() {
   return (
@@ -36,7 +37,7 @@ export default async function Home() {
             }
           >
             <Image
-              src={`/flow.png`}
+              src={flow}
               alt="hero image showcasing workflow of fuzzie automation"
               height={811}
               width={1440}
