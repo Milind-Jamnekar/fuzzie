@@ -1,10 +1,8 @@
-import { UserButton, currentUser } from "@clerk/nextjs";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export async function Navbar() {
-  const user = await currentUser();
   return (
     <header
       className="fixed top-0 left-0 right-0 p-4
@@ -50,10 +48,9 @@ export async function Navbar() {
         >
           <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
           <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-            {user ? "Dashboard" : "Get Started"}
+            Get Started
           </span>
         </Link>
-        {user ? <UserButton afterSignOutUrl="/" /> : null}
         <MenuIcon className="md:hidden" />
       </aside>
     </header>
