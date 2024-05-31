@@ -18,13 +18,6 @@ export const metadata: Metadata = {
     "Fuzzie | Open source automation tool for slack, discord, notion and drive",
   description: "Automate Your Work With Fuzzie.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  // twitter: {
-  //   card: "summary_large_image",
-  //   title,
-  //   description,
-  //   creator: "@MilindJamnekar",
-  //   images: ["/flow.png"],
-  // },
   openGraph: {
     type: "website",
     siteName: "Fuzzie",
@@ -38,21 +31,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={font.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            storageKey="theme"
-            disableTransitionOnChange
-          >
-            {children}
-            <SpeedInsights />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={font.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="theme"
+          disableTransitionOnChange
+        >
+          <ClerkProvider>{children}</ClerkProvider>
+          <SpeedInsights />
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

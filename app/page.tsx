@@ -16,8 +16,9 @@ export default async function Home() {
   //WIP: remove fault IMAge for home page
   const user = await currentUser();
   if (user) {
-    redirect("/dashboard");
+    return redirect("/dashboard");
   }
+
   return (
     <main className="flex items-center justify-center flex-col">
       <Navbar />
