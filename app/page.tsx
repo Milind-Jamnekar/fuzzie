@@ -51,7 +51,7 @@ export default async function Home() {
               className="mx-auto rounded-2xl object-cover h-full object-left-top"
               draggable={false}
               placeholder="blur"
-              priority={true}
+              priority
             />
           </ContainerScroll>
         </div>
