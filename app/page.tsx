@@ -45,11 +45,13 @@ export default async function Home() {
           >
             <Image
               src={`/flow.png`}
-              alt="hero"
+              alt="hero image showcasing workflow of fuzzie automation"
               height={811}
               width={1440}
               className="mx-auto rounded-2xl object-cover h-full object-left-top"
               draggable={false}
+              placeholder="blur"
+              priority={true}
             />
           </ContainerScroll>
         </div>
