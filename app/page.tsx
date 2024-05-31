@@ -6,11 +6,9 @@ import { LampComponent } from "@/components/global/lamp";
 import { Navbar } from "@/components/global/Navbar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { clients, products } from "@/lib/constant";
-import { currentUser } from "@clerk/nextjs";
 import { CheckIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
   return (
