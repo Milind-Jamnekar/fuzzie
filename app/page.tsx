@@ -13,7 +13,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  //WIP: remove fault IMAge for home page
   const user = await currentUser();
   if (user) {
     return redirect("/dashboard");
