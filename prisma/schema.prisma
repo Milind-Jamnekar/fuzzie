@@ -20,11 +20,12 @@ model User {
   tier         String  @default("Free")
   credits      Int     @default(10)
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  localGoogleId    String?  @unique
-  googleResourceId String?  @unique
-  pageToken        String?  @unique
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  localGoogleId            String?   @unique
+  googleResourceId         String?   @unique
+  pageToken                String?   @unique
+  googleResourcesUpdatedAt DateTime?
 
   LocalGoogleCredential LocalGoogleCredential?
   DiscordWebhook        DiscordWebhook[]
