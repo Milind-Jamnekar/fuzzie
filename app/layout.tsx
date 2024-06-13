@@ -10,13 +10,13 @@ const font = DM_Sans({ subsets: ["latin"] });
 
 const title = "Fuzzie | Automation tool for slack, discord, notion and drive";
 
-const description = "Try open source automation tool with simple and modern ui";
+const description =
+  "Try an open source automation tool with simple and modern ui";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fuzzie.milindjamnekar.dev"),
-  title:
-    "Fuzzie | Open source automation tool for slack, discord, notion and drive",
-  description: "Automate Your Work With Fuzzie.",
+  title,
+  description,
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   openGraph: {
     type: "website",
