@@ -17,7 +17,20 @@ export async function GET() {
   });
 
   const { userId } = auth();
-  if (!userId) return NextResponse.json({ message: "User not found" });
+  if (!userId)
+    return NextResponse.json({ message: "User not found" }, { status: 404 });
+
+  const user = await db.user.findFirst({
+    where: { clerkId: userId },
+    select: { googleResourceId: true, pageToken: true },
+  });
+
+  if (!user) {
+    return NextResponse.json(
+      { message: "User not found in database" },
+      { status: 404 }
+    );
+  }
 
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
@@ -69,6 +82,7 @@ export async function GET() {
       data: {
         pageToken: startPageToken,
         googleResourceId: listener.data.resourceId,
+        googleResourcesUpdatedAt: new Date(),
       },
     });
 
