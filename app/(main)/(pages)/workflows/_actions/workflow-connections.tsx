@@ -4,6 +4,14 @@ import { db } from "@/lib/db";
 import { auth, currentUser } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 
+const ONE_HOUR = 60 * 60 * 1000; // Milliseconds in one hour
+
+function isUpdatedRecently(updatedAt: Date): boolean {
+  const currentTime = new Date();
+  const oneHourAgo = new Date(currentTime.getTime() - ONE_HOUR);
+  return updatedAt > oneHourAgo;
+}
+
 export const getGoogleListener = async () => {
   const { userId } = auth();
 
@@ -14,10 +22,21 @@ export const getGoogleListener = async () => {
       },
       select: {
         googleResourceId: true,
+        googleResourcesUpdatedAt: true,
       },
     });
 
-    if (listener) return listener;
+    if (listener && listener?.googleResourcesUpdatedAt) {
+      if (isUpdatedRecently(listener.googleResourcesUpdatedAt)) {
+        // this section is for greater than 1h
+        return {
+          message: "Listener have expired! Please create listner again",
+          type: "expired",
+        };
+      } else {
+        return { message: "Listener have been working", type: "ok", listener };
+      }
+    }
   }
 };
 
