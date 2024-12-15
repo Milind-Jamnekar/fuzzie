@@ -63,7 +63,7 @@ const ContentBasedOnTitle = ({
       }
     };
     reqGoogle();
-  }, []);
+  }, [setFile]);
 
   const nodeConnectionType: any = useMemo(
     // @ts-ignore

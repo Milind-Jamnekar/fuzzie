@@ -21,15 +21,25 @@ const GoogleDriveFiles = (props: Props) => {
       toast.message(response.data);
       setLoading(false);
       setIsListening(true);
+      return;
     }
     setIsListening(false);
   }, []);
 
   const onListener = useCallback(async () => {
     const listener = await getGoogleListener();
-    if (listener?.googleResourceId !== null) {
+    if (listener?.type === "ok") {
+      toast.message(listener.message);
       setIsListening(true);
       return true;
+    } else if (listener?.type === "expired") {
+      toast(listener.message, {
+        action: {
+          label: "Create new listner",
+          onClick: () => console.log("Undo"),
+        },
+        important: true,
+      });
     }
     return false;
   }, []);

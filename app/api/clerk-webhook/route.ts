@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       }
     }
   } catch (error) {
-    console.log("error in updating user in database");
+    console.error("error in updating user in database");
     return NextResponse.json(
       {
         message: "error in updating user in database",
